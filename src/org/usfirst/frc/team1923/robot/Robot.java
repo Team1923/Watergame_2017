@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
 	// Declare one instance of each subsystem and OI.
 	public static DrivetrainSubsystem driveSubSys;
 	public static OI oi;
-
+ 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -108,7 +108,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
+ 
 	/**
 	 * This function is called periodically during test mode
 	 */

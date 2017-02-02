@@ -27,5 +27,4 @@ public class ShiftGearCommand extends InstantCommand {
 			Robot.driveSubSys.shiftDown();
 		}
 	}
-
 }

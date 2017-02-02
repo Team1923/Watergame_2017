@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class PS4Controller extends Joystick {
 
 	/* Default Values */
-	private static final double DEFAULT_TRIGGER_DEADZONE = 0.01; // Jiggle room
+	private static final double DEFAULT_TRIGGER_DEADZONE = 0.05; // Jiggle room
 																	// for the
 																	// triggers
 	private static final double DEFAULT_TRIGGER_SENSITIVITY = 0.6; // If the
@@ -46,10 +46,10 @@ public class PS4Controller extends Joystick {
 	private static final int LEFT_TRIGGER_AXIS_ID = 2; // Also called L2
 	private static final int RIGHT_TRIGGER_AXIS_ID = 3; // Also called R2
 
-	private static final int LEFT_STICK_X_AXIS_ID = 4;
-	private static final int LEFT_STICK_Y_AXIS_ID = 5;
-	private static final int RIGHT_STICK_X_AXIS_ID = 6;
-	private static final int RIGHT_STICK_Y_AXIS_ID = 7;
+	private static final int LEFT_STICK_X_AXIS_ID = 0;
+	private static final int LEFT_STICK_Y_AXIS_ID = 1;
+	private static final int RIGHT_STICK_X_AXIS_ID = 4;
+	private static final int RIGHT_STICK_Y_AXIS_ID = 5;
 
 	/* Instance Values */
 	private final int port;

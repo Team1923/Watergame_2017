@@ -33,7 +33,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	private DoubleSolenoid shifter;
 	private DoubleSolenoid shiftOmnis;
-
+	
 	public DriveProfile dprofile = new DriveProfile(RobotMap.DRIVER_PROFILE);
 
 	public DrivetrainSubsystem() {
@@ -50,7 +50,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
 		shifter = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.SHIFT_FORWARD_PORT,
 				RobotMap.SHIFT_BACKWARD_PORT);
-		shiftOmnis = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.OMNI_FORWARD_PORT, RobotMap.OMNI_BACKWARD_PORT);
+
 		setToFollow();
 		configPID();
 		drive(0, 0, TalonControlMode.PercentVbus);
@@ -186,7 +186,7 @@ public class DrivetrainSubsystem extends Subsystem {
 			shifter.set(Value.kReverse);
 		}
 	}
-	
+
 	public void shiftUpOmnis(){
 		this.shiftOmnis.set(Value.kForward);
 	}
@@ -194,6 +194,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	public void shiftDownOmnis(){
 		this.shiftOmnis.set(Value.kReverse);
 	}
+
 
 	private boolean safeToShift() {
 		return Math.max(Math.abs(leftTalons[0].getEncVelocity()),
