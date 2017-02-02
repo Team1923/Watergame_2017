@@ -4,18 +4,15 @@ import org.usfirst.frc.team1923.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
-/**
- * This command shifts the gears from up to down or down to up if safe.
- */
-public class ShiftGearCommand extends InstantCommand {
+public class ShiftOmnisCommand extends InstantCommand {
 
 	private boolean up;
 
-	public ShiftGearCommand() {
+	public ShiftOmnisCommand() {
 		super();
 	}
 
-	public ShiftGearCommand(boolean up) {
+	public ShiftOmnisCommand(boolean up) {
 		this.up = up;
 	}
 

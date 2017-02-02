@@ -32,7 +32,8 @@ public class DrivetrainSubsystem extends Subsystem {
 	private CANTalon[] leftTalons, rightTalons;
 
 	private DoubleSolenoid shifter;
-
+	private DoubleSolenoid shiftOmnis;
+	
 	public DriveProfile dprofile = new DriveProfile(RobotMap.DRIVER_PROFILE);
 
 	public DrivetrainSubsystem() {
@@ -185,6 +186,15 @@ public class DrivetrainSubsystem extends Subsystem {
 			shifter.set(Value.kReverse);
 		}
 	}
+
+	public void shiftUpOmnis(){
+		this.shiftOmnis.set(Value.kForward);
+	}
+	
+	public void shiftDownOmnis(){
+		this.shiftOmnis.set(Value.kReverse);
+	}
+
 
 	private boolean safeToShift() {
 		return Math.max(Math.abs(leftTalons[0].getEncVelocity()),
