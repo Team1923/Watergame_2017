@@ -22,8 +22,7 @@ public class RawDriveCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveSubSystem.disablePID();// Disables the PID system to gain full control
-									// without correction
+		Robot.driveSubSystem.disable();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
