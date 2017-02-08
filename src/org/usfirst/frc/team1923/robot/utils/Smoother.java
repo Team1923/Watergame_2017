@@ -4,11 +4,13 @@ import org.usfirst.frc.team1923.robot.RobotMap;
 
 /**
  * Based off of Chris's Calculator.java.
+ * 
  */
 public class Smoother {
 
 	public static double ease(double current, double old, double coalesceIncrement) {
 		double new;
+		
 		if (current < old - coalesceIncrement) {
 			new = old - coalesceIncrement;
 		} 
@@ -18,6 +20,7 @@ public class Smoother {
 		else {
 			new = current;
 		}
+		
 		return new;
 	}
 	
