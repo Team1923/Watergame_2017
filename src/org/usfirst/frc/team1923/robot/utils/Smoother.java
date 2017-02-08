@@ -12,10 +12,10 @@ public class Smoother {
 		if (current < old - coalesceIncrement) {
 			new = old - coalesceIncrement;
 		} 
-    else if (current > old + coalesceIncrement) {
+		else if (current > old + coalesceIncrement) {
 			new = old + coalesceIncrement;
 		} 
-    else {
+		else {
 			new = current;
 		}
 		return new;
