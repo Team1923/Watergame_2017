@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1923.robot;
 
+import org.usfirst.frc.team1923.robot.commands.ControllerRumbleCommand;
 import org.usfirst.frc.team1923.robot.commands.ShiftGearCommand;
 import org.usfirst.frc.team1923.robot.commands.ShiftOmnisCommand;
 import org.usfirst.frc.team1923.robot.utils.PS4Controller;
@@ -37,19 +38,21 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 
-	public PS4Controller driver, op;
+	public PS4Controller driver, operator;
 
 	public OI() {
 
 		// Creates two ps4 controllers
 		driver = new PS4Controller(RobotMap.DRIVER_CONTROLLER_PORT);
-		op = new PS4Controller(RobotMap.OP_CONTROLLER_PORT);
+		operator = new PS4Controller(RobotMap.OP_CONTROLLER_PORT);
 
 		// Maps drivetrain shifting buttons the controllers
 		driver.lb.whenPressed(new ShiftGearCommand(true));
 		driver.rb.whenPressed(new ShiftGearCommand(false));
 		driver.rt.whenPressed(new ShiftOmnisCommand(true));
 		driver.rt.whenPressed(new ShiftOmnisCommand(false));
+		
+		driver.triangle.whenPressed(new ControllerRumbleCommand());
 	}
 
 }
