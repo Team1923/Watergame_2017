@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import edu.wpi.first.wpilibj.command.Command;
+
 /**
  * Class that houses the motors and shifters
  */
@@ -202,6 +204,11 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public void stop() {
 		drive(0, 0, TalonControlMode.PercentVbus);
+	}
+	
+	public void turn(double angle, double timeOut)
+	{
+		
 	}
 
 }
