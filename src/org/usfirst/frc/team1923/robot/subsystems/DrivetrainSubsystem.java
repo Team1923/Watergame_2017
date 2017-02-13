@@ -202,6 +202,5 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public void stop() {
 		drive(0, 0, TalonControlMode.PercentVbus);
-	}
-	
+	}	
 }
