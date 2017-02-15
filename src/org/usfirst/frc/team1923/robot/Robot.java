@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1923.robot;
 
 import org.usfirst.frc.team1923.robot.commands.EmptyCommand;
+import org.usfirst.frc.team1923.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -21,7 +22,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	// Declare one instance of each subsystem and OI.
-	public static DrivetrainSubsystem driveSubSystem;
+	public static DrivetrainSubsystem driveSubSys;
+	public static ClimberSubsystem climbSubSys;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -34,8 +36,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		// Initialize all the subsystems and OI.
-		driveSubSystem = new DrivetrainSubsystem();
+
 		oi = new OI();
+		driveSubSys = new DrivetrainSubsystem();
+		climbSubSys = new ClimberSubsystem();
+
 		chooser.addDefault("Default Auto", new EmptyCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
