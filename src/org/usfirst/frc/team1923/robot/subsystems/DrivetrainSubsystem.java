@@ -7,6 +7,7 @@ import org.usfirst.frc.team1923.robot.utils.DriveProfile;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.PigeonImu;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -30,7 +31,10 @@ public class DrivetrainSubsystem extends Subsystem {
 	// The 0th element will always be the master Talon, the subsequent ones will
 	// follow
 	private CANTalon[] leftTalons, rightTalons;
-
+	
+	//IMU
+	public PigeonImu pigeonImu  = new PigeonImu(RobotMap.PIGEON_IMU_PORT);
+	
 	private DoubleSolenoid shifter;
 	private DoubleSolenoid shiftOmnis;
 
@@ -201,7 +205,8 @@ public class DrivetrainSubsystem extends Subsystem {
 		return Math.max(Math.abs(leftTalons[0].getEncVelocity()),
 				Math.abs(rightTalons[0].getEncVelocity())) < MAX_SAFE_SHIFT_SPEED;
 	}
-
+	
+	
 	public void stop() {
 		drive(0, 0, TalonControlMode.PercentVbus);
 	}

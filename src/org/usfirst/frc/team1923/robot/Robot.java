@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team1923.robot;
 
+import java.util.Arrays;
+
 import org.usfirst.frc.team1923.robot.commands.EmptyCommand;
 import org.usfirst.frc.team1923.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.DrivetrainSubsystem;
@@ -119,4 +121,11 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+
+	public void log() {
+		short [] rm_xyz = new short [3];
+		Robot.driveSubSys.pigeonImu.GetRawMagnetometer(rm_xyz);
+		SmartDashboard.putString("Compass Raw: ",Arrays.toString(rm_xyz) );
+	}
+
 }

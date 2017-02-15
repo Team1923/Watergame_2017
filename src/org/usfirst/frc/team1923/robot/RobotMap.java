@@ -25,7 +25,7 @@ public class RobotMap {
 	// Talons that have the SRX Mag Enc installed (masters);
 	public static final int LEFT_ENCODER_PORT = 7;
 	public static final int RIGHT_ENCODER_PORT = 2;
-
+	
 	// Climb motor numbers
 	public static final int LEFT_CLIMB_PORT = 6;
 	public static final int RIGHT_CLIMB_PORT = 7;
@@ -44,6 +44,9 @@ public class RobotMap {
 
 	// PCM Module number
 	public static final int PCM_MODULE_NUM = 12;
+	
+	//Pigeon IMU ports 
+	public static final int PIGEON_IMU_PORT = 0;
 	
 	/*
 	 * 2 controllers 6 drive talons 2 climb talons 1 shift piston 1 drop piston
