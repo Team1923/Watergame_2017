@@ -12,7 +12,7 @@
 //	private boolean forward; // True if shifting forward
 //
 //	public SlideCommand() {
-//		super();
+//		super(); 
 //	}
 //
 //	/**

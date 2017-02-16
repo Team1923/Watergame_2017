@@ -5,7 +5,7 @@ import org.usfirst.frc.team1923.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+ 
 /**
  *
  */
