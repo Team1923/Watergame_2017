@@ -13,6 +13,7 @@ public class SlideCommand extends InstantCommand {
 
 	public SlideCommand() {
 		super();
+		requires(Robot.gearSubSys);
 	}
 
 	/**
@@ -27,11 +28,11 @@ public class SlideCommand extends InstantCommand {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		System.out.println("SLIDE FORWARD!");	//Test print
+		System.out.println("SLIDE FORWARD!"); // Test print
 		if (forward) {
-			Robot.climbSubSys.slideForward();
+			Robot.gearSubSys.slideForward();
 		} else {
-			Robot.climbSubSys.slideBackward();
+			Robot.gearSubSys.slideBackward();
 		}
 	}
 }

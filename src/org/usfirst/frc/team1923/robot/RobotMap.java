@@ -18,7 +18,7 @@ public class RobotMap {
 	public static final int OP_CONTROLLER_PORT = 1;
 
 	// Drive motor numbers
-	public static final int[] LEFT_DRIVE_PORTS = { 8, 40, 41 }; // Master Talon
+	public static final int[] LEFT_DRIVE_PORTS = { 8, 7, 6 }; // Master Talon
 																// first
 	public static final int[] RIGHT_DRIVE_PORTS = { 1, 2, 3 };
 
