@@ -27,8 +27,8 @@ public class RobotMap {
 	public static final int RIGHT_ENCODER_PORT = 1;
 
 	// Climb motor numbers
-	public static final int LEFT_CLIMB_PORT = 6;
-	public static final int RIGHT_CLIMB_PORT = 7;
+	public static final int LEFT_CLIMB_PORT = 8;
+	public static final int RIGHT_CLIMB_PORT = 9;
 
 	// Climber slider port numbers
 	public static final int SLIDE_FORWARD_PORT = 6;
