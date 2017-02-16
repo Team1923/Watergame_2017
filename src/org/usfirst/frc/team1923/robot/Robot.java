@@ -3,6 +3,7 @@ package org.usfirst.frc.team1923.robot;
 
 import java.util.Arrays;
 
+import org.usfirst.frc.team1923.robot.commands.CalibrationCommand;
 import org.usfirst.frc.team1923.robot.commands.EmptyCommand;
 import org.usfirst.frc.team1923.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.DrivetrainSubsystem;
@@ -30,7 +31,8 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-
+	
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -124,8 +126,11 @@ public class Robot extends IterativeRobot {
 
 	public void log() {
 		short [] rm_xyz = new short [3];
+		CalibrationCommand calib = new CalibrationCommand();
 		Robot.driveSubSys.pigeonImu.GetRawMagnetometer(rm_xyz);
 		SmartDashboard.putString("Compass Raw: ",Arrays.toString(rm_xyz) );
+		SmartDashboard.putNumber("Calibration Status:  ",calib.getCalibrationStatus() );
+
 	}
 
 }
