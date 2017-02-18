@@ -146,7 +146,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	 *            Right power
 	 */
 	public void set(double left, double right) {
-		
+
 		leftTalons[0].set(left);
 		rightTalons[0].set(right);
 	}
