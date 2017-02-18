@@ -1,24 +1,26 @@
 package org.usfirst.frc.team1923.robot.commands.driveCommands;
 
+
 import org.usfirst.frc.team1923.robot.Robot;
+
+import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TurnCommand extends Command{
+public class TurnTimeCommand extends Command{
 	
-	private double degrees;
+	private double power;
 
-
-	public TurnCommand(double degrees)
+	public TurnTimeCommand(double power, double timeOut)
 	{
 		requires(Robot.driveSubSys);
-		this.degrees = degrees;
-		//setTimeout(timeOut)
+		this.power = power;
+		setTimeout(timeOut);
 	}
 	
 	protected void initialize()
 	{
-		Robot.driveSubSys.turn(degrees);
+		Robot.driveSubSys.turnTime(power);;
 	}
 	
 	protected void execute()
@@ -28,7 +30,7 @@ public class TurnCommand extends Command{
 	
 	protected void end()
 	{
-		
+		Robot.driveSubSys.stop();
 	}
 	
 	protected void interrupted()
@@ -39,9 +41,7 @@ public class TurnCommand extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return Robot.driveSubSys.turnIsFinished();
-		//isTimedOut();
+		return isTimedOut();
 	}
 
 }

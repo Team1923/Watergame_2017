@@ -222,36 +222,15 @@ public class DrivetrainSubsystem extends Subsystem {
 				Math.abs(rightTalons[0].getEncVelocity())) < MAX_SAFE_SHIFT_SPEED;
 	}
 	
-	public void turn(double degrees)
-	{
-		//calculate number of encoder ticks needed for inputted angle
-		double turnCircumference = 2 * Math.PI * TURN_RADIUS;
-		double turnArc = (degrees / 360) * turnCircumference; 
-		double numEncTicks = ((turnArc / INCHES_PER_TICK) / 360) * 2520; //2520 is a speed value -- play with and test
+	public void turnTime(double power)
+	{	
+		leftTalons[0].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		rightTalons[0].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		
-		//setting up encoders
-		leftTalons[0].changeControlMode(CANTalon.TalonControlMode.Position);
-		rightTalons[0].changeControlMode(CANTalon.TalonControlMode.Position);
-		
-		leftTalons[0].setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rightTalons[0].setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		
-		leftTalons[0].setEncPosition(0);
-		rightTalons[0].setEncPosition(0);
-		
-		leftTalons[0].setPID(.8, .0025, .8); // these are just test values
-		rightTalons[0].setPID(.8, .0025, .8); // TODO: substitute with constants once those are filled in
-		
-		//setting opposite speeds on talons to turn
-		leftTalons[0].set(numEncTicks);
-		rightTalons[0].set(-numEncTicks);
+		leftTalons[0].set(power);
+		rightTalons[0].set(-power);
 	}
 	
-	public boolean turnIsFinished()
-	{
-		return leftTalons[0].getError() < DEFAULT_ERROR_MARGIN;
-	}
-
 	public void stop() {
 		drive(0, 0, TalonControlMode.PercentVbus);
 	}
