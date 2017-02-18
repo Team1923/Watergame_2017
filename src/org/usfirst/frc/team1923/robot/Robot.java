@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1923.robot;
 
 import org.usfirst.frc.team1923.robot.commands.EmptyCommand;
+import org.usfirst.frc.team1923.robot.commands.driveCommands.TurnCommand;
 import org.usfirst.frc.team1923.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.DrivetrainSubsystem;
 
@@ -42,8 +43,10 @@ public class Robot extends IterativeRobot {
 		climbSubSys = new ClimberSubsystem();
 
 		chooser.addDefault("Default Auto", new EmptyCommand());
+		chooser.addObject("Turn Auto", new TurnCommand(45));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData("Turn Auto", chooser);
 	}
 
 	/**
