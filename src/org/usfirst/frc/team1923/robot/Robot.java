@@ -5,6 +5,7 @@ import org.usfirst.frc.team1923.robot.commands.EmptyCommand;
 import org.usfirst.frc.team1923.robot.commands.driveCommands.TurnCommand;
 import org.usfirst.frc.team1923.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.DrivetrainSubsystem;
+import org.usfirst.frc.team1923.robot.subsystems.GearSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 	// Declare one instance of each subsystem and OI.
 	public static DrivetrainSubsystem driveSubSys;
 	public static ClimberSubsystem climbSubSys;
+	public static GearSubsystem gearSubSys;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -38,9 +40,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// Initialize all the subsystems and OI.
 
-		oi = new OI();
+		gearSubSys = new GearSubsystem();
 		driveSubSys = new DrivetrainSubsystem();
 		climbSubSys = new ClimberSubsystem();
+		oi = new OI();
 
 		chooser.addDefault("Default Auto", new EmptyCommand());
 		chooser.addObject("Turn Auto", new TurnCommand(45));

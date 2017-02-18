@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Class that houses the motors and shifters
@@ -27,7 +27,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	private final double F_CONSTANT = 0;
 	private final boolean LEFT_REVERSED = false; // Reverse the sensor or
 													// the motor or both?
-	private final boolean RIGHT_REVERSED = false;
+	private final boolean RIGHT_REVERSED = true;
 	private final int MAX_SAFE_SHIFT_SPEED = 100; // RPM
 	private final int TURN_RADIUS = 16; // TODO:  //Test & play with this value
 	private final double WHEEL_DIAMETER = 4; //TODO
@@ -68,6 +68,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		setToFollow();
 		configPID();
 		drive(0, 0, TalonControlMode.PercentVbus);
+
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -129,10 +130,12 @@ public class DrivetrainSubsystem extends Subsystem {
 
 		setMasterToMode(TalonControlMode.PercentVbus);
 		leftTalons[0].set(0.0);
-		leftTalons[0].reverseOutput(LEFT_REVERSED);
+		// leftTalons[0].reverseOutput(LEFT_REVERSED);
+		leftTalons[0].setInverted(LEFT_REVERSED);
 
 		rightTalons[0].set(0.0);
-		rightTalons[0].reverseOutput(RIGHT_REVERSED);
+		// rightTalons[0].reverseOutput(RIGHT_REVERSED);
+		rightTalons[0].setInverted(RIGHT_REVERSED);
 	}
 
 	/**
@@ -145,8 +148,8 @@ public class DrivetrainSubsystem extends Subsystem {
 	 * @param right
 	 *            Right power
 	 */
-	public void set(double left, double right) {
 
+	private void set(double left, double right) {
 		leftTalons[0].set(left);
 		rightTalons[0].set(right);
 	}
@@ -187,9 +190,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new RawDriveCommand()); // Temp set to raw drive,
-													// could change to speed
-													// later on for more control
+		setDefaultCommand(new RawDriveCommand());
 	}
 
 	public void shiftUp() {
