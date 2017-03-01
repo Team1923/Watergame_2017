@@ -18,17 +18,21 @@ public class RobotMap {
 	public static final int OP_CONTROLLER_PORT = 1;
 
 	// Drive motor numbers
-	public static final int[] LEFT_DRIVE_PORTS = { 2, 3, 4 }; // Master Talon
+	public static final int[] LEFT_DRIVE_PORTS = { 8, 7, 6 }; // Master Talon
 																// first
-	public static final int[] RIGHT_DRIVE_PORTS = { 7, 8, 9 };
+	public static final int[] RIGHT_DRIVE_PORTS = { 1, 2, 3 };
 
 	// Talons that have the SRX Mag Enc installed (masters);
-	public static final int LEFT_ENCODER_PORT = 7;
-	public static final int RIGHT_ENCODER_PORT = 2;
+	public static final int LEFT_ENCODER_PORT = 8;
+	public static final int RIGHT_ENCODER_PORT = 1;
 
 	// Climb motor numbers
-	public static final int LEFT_CLIMB_PORT = 6;
-	public static final int RIGHT_CLIMB_PORT = 7;
+	public static final int LEFT_CLIMB_PORT = 4;
+	public static final int RIGHT_CLIMB_PORT = 5;
+
+	// Climber slider port numbers
+	public static final int SLIDE_FORWARD_PORT = 6;
+	public static final int SLIDE_BACKWARD_PORT = 7;
 
 	// Gear box shifting pistons ports on the PCM
 	public static final int SHIFT_FORWARD_PORT = 2;
@@ -44,10 +48,16 @@ public class RobotMap {
 
 	// PCM Module number
 	public static final int PCM_MODULE_NUM = 12;
-	
+
 	/*
 	 * 2 controllers 6 drive talons 2 climb talons 1 shift piston 1 drop piston
 	 * 1 gear piston TO BE DETERMINED: Ultrasonic? Button? Camera?
 	 */
+
+	// Ultrasonic Sensor DIO ports
+	public static final int FRONT_SONAR_PING_PORT = 0;
+	public static final int FRONT_SONAR_ECHO_PORT = 1; // UNITS declared in
+														// constructor in drive
+														// subsystem
 
 }

@@ -1,8 +1,12 @@
 package org.usfirst.frc.team1923.robot;
 
-import org.usfirst.frc.team1923.robot.commands.ControllerRumbleCommand;
-import org.usfirst.frc.team1923.robot.commands.driveCommands.ShiftGearCommand;
-import org.usfirst.frc.team1923.robot.commands.driveCommands.ShiftOmnisCommand;
+import org.usfirst.frc.team1923.robot.commands.driveCommands.DumbEncoderTurn;
+import org.usfirst.frc.team1923.robot.commands.driveCommands.ResetEncoderCommand;
+import org.usfirst.frc.team1923.robot.commands.driveCommands.ShiftCommand;
+import org.usfirst.frc.team1923.robot.commands.driveCommands.ShiftOmniCommand;
+import org.usfirst.frc.team1923.robot.commands.gearCommands.GearCommand;
+import org.usfirst.frc.team1923.robot.commands.gearCommands.GearSetHomeCommand;
+import org.usfirst.frc.team1923.robot.commands.gearCommands.SlideCommand;
 import org.usfirst.frc.team1923.robot.utils.PS4Controller;
 
 /**
@@ -49,17 +53,18 @@ public class OI {
 
 		op = new PS4Controller(RobotMap.OP_CONTROLLER_PORT);
 
-		// Maps drivetrain shifting buttons the controllers
-		driver.lb.whenPressed(new ShiftGearCommand(true));
-		driver.rb.whenPressed(new ShiftGearCommand(false));
+		driver.lb.whenActive(new ShiftCommand(true));
+		driver.rb.whenActive(new ShiftCommand(false));
 
-		driver.lt.whenPressed(new ShiftOmnisCommand(true));
-		driver.rt.whenPressed(new ShiftOmnisCommand(false));
+		driver.lt.whenActive(new ShiftOmniCommand(true));
+		driver.rt.whenActive(new ShiftOmniCommand(false));
 
-		// driver.circle.whenPressed(new ControllerRumbleCommand(1, driver));
-		// op.circle.whenPressed(new ControllerRumbleCommand(1, op));
-		// driver.dPad.left.whenActive(new ControllerRumbleCommand(0.5,
-		// driver));
+		driver.square.whenActive(new SlideCommand());
+		driver.triangle.whenActive(new GearCommand());
+		driver.circle.whenActive(new GearSetHomeCommand());
+		driver.cross.whenActive(new ResetEncoderCommand());
+		
+		driver.dPad.down.whenActive(new DumbEncoderTurn(90));
 	}
 
 }
