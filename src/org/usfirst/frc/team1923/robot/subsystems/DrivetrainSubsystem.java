@@ -1,238 +1,302 @@
 package org.usfirst.frc.team1923.robot.subsystems;
- 
+
 import org.usfirst.frc.team1923.robot.RobotMap;
 import org.usfirst.frc.team1923.robot.commands.driveCommands.RawDriveCommand;
 import org.usfirst.frc.team1923.robot.utils.DriveProfile;
- 
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
- 
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Ultrasonic.Unit;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Class that houses the motors and shifters
  */
 public class DrivetrainSubsystem extends Subsystem {
 
-        private static final double P_CONSTANT = 0.5; // TODO: Fill in these values
-        private static final double I_CONSTANT = 0;
-        private static final double D_CONSTANT = 0;
-        private static final double F_CONSTANT = 0;
-        private static final boolean LEFT_REVERSED = false; // Reverse the sensor or
-                                                                                                                // the motor or both?
-        private static final boolean RIGHT_REVERSED = false;
-        private static final int MAX_SAFE_SHIFT_SPEED = 100; // RPM
+	private final double P_CONSTANT = 0.04; // TODO: Fill in these values
+	private final double I_CONSTANT = 0;
+	private final double D_CONSTANT = 0;
+	private final double F_CONSTANT = 0.005;
+	private final boolean LEFT_REVERSED = true; // Reverse the sensor or
+												// the motor or both?
+	private final boolean RIGHT_REVERSED = false;
+	private final int MAX_SAFE_SHIFT_SPEED = 100; // RPM
 
-        private static final double WHEEL_DIAMETER = 4;
-        private static final double WHEEL_CIRCUMFRENCE = WHEEL_DIAMETER * Math.PI;
-        private static final double COUNTS_PER_ROTATION = 4096;
-        
-        public final double ENCODER_ERROR_MARGIN = 200;
-        
-        // Arrays of talons to group them together
-        // The 0th element will always be the master Talon, the subsequent ones will
-        // follow
-        public CANTalon[] leftTalons, rightTalons;
+	// TODO: Change wheel diameter and drive base width
+	private final double WHEEL_DIAMETER = 4;
+	private final double DRIVE_RATIO = 31.5 / 50.0;
+	// Every turn of the encoder equals DRIVE_RATIO turns of the wheel
+	public final double DISTANCE_TO_ROTATION_DENOMINATOR = Math.PI * WHEEL_DIAMETER * DRIVE_RATIO;
+	// Multiply the intended distance in inches with this multiplier to find the
+	// rotational target value e.g. target for 5 inches is
+	// 5/DISTANCE_TO_ROTATION_MULTIPLIER
+	private final double DRIVE_BASE_WIDTH = 22.5; // Middle of wheels
+													// measurement
+													// in inches
+	public final double DEGREE_TO_ROTATION_DENOMINATOR = 360
+			/ (Math.PI * DRIVE_BASE_WIDTH / DISTANCE_TO_ROTATION_DENOMINATOR);
+	// Multiply the intended degree turn to this to find the encoder targets for
+	// the motors
+	// e.g. target for 60 deg is 60/DEGREE_TO_ROTATION_MULTIPLIER
 
-        private DoubleSolenoid shifter;
-        private DoubleSolenoid shiftOmnis;
+	// Arrays of talons to group them together
+	// The 0th element will always be the master Talon, the subsequent ones will
+	// follow
+	private CANTalon[] leftTalons, rightTalons;
 
-        public DriveProfile dprofile = new DriveProfile(RobotMap.DRIVER_PROFILE);
+	private DoubleSolenoid shifter;
+	private DoubleSolenoid shiftOmnis;
 
-        public DrivetrainSubsystem() {
-                leftTalons = new CANTalon[RobotMap.LEFT_DRIVE_PORTS.length];
-                rightTalons = new CANTalon[RobotMap.RIGHT_DRIVE_PORTS.length];
-                
-                for (int i = 0; i < RobotMap.LEFT_DRIVE_PORTS.length; i++) {
-                        leftTalons[i] = new CANTalon(RobotMap.LEFT_DRIVE_PORTS[i]);
-                }
+	public Ultrasonic frontSonar;
 
-                for (int i = 0; i < RobotMap.RIGHT_DRIVE_PORTS.length; i++) {
-                        rightTalons[i] = new CANTalon(RobotMap.RIGHT_DRIVE_PORTS[i]);
-                }
-                
-//                leftTalons[0].setEncPosition(0);
-//                rightTalons[0].setEncPosition(0);
-                
-                shifter = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.SHIFT_FORWARD_PORT, RobotMap.SHIFT_BACKWARD_PORT);
-                shiftOmnis = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.OMNI_FORWARD_PORT, RobotMap.OMNI_BACKWARD_PORT);
-                setToFollow();
-                configPID();
-                drive(0, 0, TalonControlMode.PercentVbus);
+	public DriveProfile dprofile = new DriveProfile(RobotMap.DRIVER_PROFILE);
 
-                leftTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-                rightTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-                
-                leftTalons[0].setAllowableClosedLoopErr((int)ENCODER_ERROR_MARGIN);
-                rightTalons[0].setAllowableClosedLoopErr((int)ENCODER_ERROR_MARGIN);
-        }
-        // Put methods for controlling this subsystem
-        // here. Call these from Commands.
+	public DrivetrainSubsystem() {
+		leftTalons = new CANTalon[RobotMap.LEFT_DRIVE_PORTS.length];
+		rightTalons = new CANTalon[RobotMap.RIGHT_DRIVE_PORTS.length];
 
-        private void setToFollow() {
-                leftTalons[1].changeControlMode(TalonControlMode.Follower);
-                leftTalons[1].set(leftTalons[0].getDeviceID());
-                leftTalons[2].changeControlMode(TalonControlMode.Follower);
-                leftTalons[2].set(leftTalons[0].getDeviceID());
+		frontSonar = new Ultrasonic(RobotMap.FRONT_SONAR_PING_PORT, RobotMap.FRONT_SONAR_ECHO_PORT, Unit.kMillimeters);
+		frontSonar.setAutomaticMode(true);
 
-                rightTalons[1].changeControlMode(TalonControlMode.Follower);
-                rightTalons[1].set(rightTalons[0].getDeviceID());
-                rightTalons[2].changeControlMode(TalonControlMode.Follower);
-                rightTalons[2].set(rightTalons[0].getDeviceID());
-        }
+		for (int i = 0; i < RobotMap.LEFT_DRIVE_PORTS.length; i++) {
+			leftTalons[i] = new CANTalon(RobotMap.LEFT_DRIVE_PORTS[i]);
+		}
 
-        /**
-         * Sets the two master talons to a certain mode
-         * 
-         * @param c
-         *            TalonControlMode to be used
-         * 
-         */
-        private void setMasterToMode(TalonControlMode c) {
-                // Speed, Position, Percent VBus etc.
-                leftTalons[0].changeControlMode(c);
-                rightTalons[0].changeControlMode(c);
-        }
+		for (int i = 0; i < RobotMap.RIGHT_DRIVE_PORTS.length; i++) {
+			rightTalons[i] = new CANTalon(RobotMap.RIGHT_DRIVE_PORTS[i]);
+		}
 
-        /**
-         * Configures the PID values of the two master talons
-         * 
-         * Sets the nominal and peak output voltages and sets the sensor and output
-         * reversal flags
-         */
-        private void configPID() {
+		shifter = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.SHIFT_FORWARD_PORT,
+				RobotMap.SHIFT_BACKWARD_PORT);
+		shiftOmnis = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.OMNI_FORWARD_PORT,
+				RobotMap.OMNI_BACKWARD_PORT);
 
-                leftTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-                leftTalons[0].reverseSensor(false); // Set to true if reverse rotation
-                leftTalons[0].configNominalOutputVoltage(0, 0);
-                leftTalons[0].configPeakOutputVoltage(12, -12);
+		setToFollow();
+		configPID();
+	}
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
 
-                rightTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-                rightTalons[0].reverseSensor(false); // Set to true if reverse rotation
-                rightTalons[0].configNominalOutputVoltage(0, 0);
-                rightTalons[0].configPeakOutputVoltage(12, -12);
+	private void setToFollow() {
+		leftTalons[1].changeControlMode(TalonControlMode.Follower);
+		leftTalons[1].set(leftTalons[0].getDeviceID());
+		leftTalons[2].changeControlMode(TalonControlMode.Follower);
+		leftTalons[2].set(leftTalons[0].getDeviceID());
 
-                leftTalons[0].setProfile(0);
-                leftTalons[0].setF(F_CONSTANT);
-                leftTalons[0].setP(P_CONSTANT);
-                leftTalons[0].setI(I_CONSTANT);
-                leftTalons[0].setD(D_CONSTANT);
+		rightTalons[1].changeControlMode(TalonControlMode.Follower);
+		rightTalons[1].set(rightTalons[0].getDeviceID());
+		rightTalons[2].changeControlMode(TalonControlMode.Follower);
+		rightTalons[2].set(rightTalons[0].getDeviceID());
+	}
 
-                rightTalons[0].setProfile(0);
-                rightTalons[0].setF(F_CONSTANT);
-                rightTalons[0].setP(P_CONSTANT);
-                rightTalons[0].setI(I_CONSTANT);
-                rightTalons[0].setD(D_CONSTANT);
+	/**
+	 * Sets the two master talons to a certain mode
+	 * 
+	 * @param c
+	 *            TalonControlMode to be used
+	 * 
+	 */
+	private void setMasterToMode(TalonControlMode c) {
+		// Speed, Position, Percent VBus etc.
+		leftTalons[0].changeControlMode(c);
+		rightTalons[0].changeControlMode(c);
+	}
 
-                setMasterToMode(TalonControlMode.Speed);
-                leftTalons[0].set(0.0);
-                leftTalons[0].reverseOutput(LEFT_REVERSED);
+	/**
+	 * Configures the PID values of the two master talons
+	 * 
+	 * Sets the nominal and peak output voltages and sets the sensor and output
+	 * reversal flags
+	 */
+	private void configPID() {
 
-                rightTalons[0].set(0.0);
-                rightTalons[0].reverseOutput(RIGHT_REVERSED);
-                
-                enableControl();
-        }
+		leftTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		leftTalons[0].reverseSensor(LEFT_REVERSED); // Set to true if reverse
+													// rotation
+		leftTalons[0].configNominalOutputVoltage(0, 0);
+		leftTalons[0].configPeakOutputVoltage(12, -12);
+		// TODO: Config higher if necessary
 
-        public void enableControl()
-        {
-                leftTalons[0].enableControl();
-                rightTalons[0].enableControl();
-        }
-        /**
-         * Directly sets the input value of the motors
-         * 
-         * Use with caution because it doesn't automatically check the control mode
-         * 
-         * @param left
-         *            Left power
-         * @param right
-         *            Right power
-         */
-        public void set(double left, double right) {
-                leftTalons[0].set(left);
-                rightTalons[0].set(right);
-        }
+		rightTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		rightTalons[0].reverseSensor(RIGHT_REVERSED); // Set to true if reverse
+														// rotation
+		rightTalons[0].configNominalOutputVoltage(0, 0);
+		rightTalons[0].configPeakOutputVoltage(12, -12);
 
-        /**
-         * Disables all the drive Talons
-         */
-        public void disable() {
-                setMasterToMode(TalonControlMode.Disabled);
-        }
+		leftTalons[0].setProfile(0);
+		leftTalons[0].setF(F_CONSTANT);
+		leftTalons[0].setP(P_CONSTANT);
+		leftTalons[0].setI(I_CONSTANT);
+		leftTalons[0].setD(D_CONSTANT);
 
-        /**
-         * Sets talon powers with a specific mode
-         * 
-         * @param left
-         *            Left power
-         * @param right
-         *            Right power
-         * @param m
-         *            TalonControlMode to be used
-         */
-        public void drive(double left, double right, TalonControlMode m) {
-                if (leftTalons[0].getControlMode() != m) {
-                        setMasterToMode(m);
-                }
-                set(left, right);
-        }
+		rightTalons[0].setProfile(0);
+		rightTalons[0].setF(F_CONSTANT);
+		rightTalons[0].setP(P_CONSTANT);
+		rightTalons[0].setI(I_CONSTANT);
+		rightTalons[0].setD(D_CONSTANT);
 
-        /**
-         * Resets current position of the encoders.
-         * 
-         * Since SRX Mag encoders are used in relative mode, this allows us to
-         * simplify autons by resetting the home position of the robot
-         */
-        public void resetPosition() {
-                leftTalons[0].setEncPosition(0);
-                rightTalons[0].setEncPosition(0);
-        }
-        
-        public boolean hasReachedLeftDistance( double leftDistance )
-        {
-                return leftTalons[0].getEncPosition() / COUNTS_PER_ROTATION * WHEEL_CIRCUMFRENCE >= leftDistance;
-        }
-        
-        public boolean hasReachedRightDistance( double rightDistance )
-        {
-                return rightTalons[0].getEncPosition() / COUNTS_PER_ROTATION * WHEEL_CIRCUMFRENCE>= rightDistance;
-        }
+		setMasterToMode(TalonControlMode.PercentVbus);
+		leftTalons[0].set(0.0);
+		leftTalons[0].reverseOutput(LEFT_REVERSED);
+		leftTalons[0].setInverted(LEFT_REVERSED);
 
-        public void initDefaultCommand() {
-                setDefaultCommand(new RawDriveCommand()); // Temp set to raw drive,
-                                                                                                        // could change to speed
-                                                                                                        // later on for more control
-        }
+		rightTalons[0].set(0.0);
+		rightTalons[0].reverseOutput(RIGHT_REVERSED);
+		rightTalons[0].setInverted(RIGHT_REVERSED);
+	}
 
-        public void shiftUp() {
-                shifter.set(Value.kForward);
-        }
+	public void setPID(double p, double i, double d, double f){
+		leftTalons[0].setPID(p, i, d);
+		leftTalons[0].setF(f);
+		rightTalons[0].setPID(p, i, d);
+		rightTalons[0].setF(f);
+	}
+	
+	/**
+	 * Directly sets the input value of the motors
+	 * 
+	 * Use with caution because it doesn't automatically check the control mode
+	 * 
+	 * @param left
+	 *            Left power
+	 * @param right
+	 *            Right power
+	 */
+	private void set(double left, double right) {
+		leftTalons[0].set(left);
+		rightTalons[0].set(right);
+	}
 
-        public void shiftDown() {
-                if (safeToShift()) {
-                        shifter.set(Value.kReverse);
-                }
-        }
-        
-        public void shiftUpOmnis(){
-                this.shiftOmnis.set(Value.kForward);
-        }
-        
-        public void shiftDownOmnis(){
-                this.shiftOmnis.set(Value.kReverse);
-        }
+	/**
+	 * Disables the closed-loop system and allows direct power setting
+	 */
+	public void disable() {
+		setMasterToMode(TalonControlMode.Disabled);
+	}
+	
+	public void disableControl() {
+		leftTalons[0].disableControl();
+		rightTalons[0].disableControl();
+	}
+	
+	public void enable() {
+		setMasterToMode(TalonControlMode.PercentVbus);
+	}
 
-        private boolean safeToShift() {
-                return Math.max(Math.abs(leftTalons[0].getEncVelocity()),
-                                Math.abs(rightTalons[0].getEncVelocity())) < MAX_SAFE_SHIFT_SPEED;
-        }
+	/**
+	 * Sets talon powers with a specific mode
+	 * 
+	 * @param left
+	 *            Left power
+	 * @param right
+	 *            Right power
+	 * @param m
+	 *            TalonControlMode to be used
+	 */
+	public void drive(double left, double right, TalonControlMode m) {
+		if (leftTalons[0].getControlMode() != m || rightTalons[0].getControlMode() != m) {
+			setMasterToMode(m);
+		}
+		set(left, right);
+	}
 
-        public void stop() {
-                drive(0, 0, TalonControlMode.PercentVbus);
-        }
+	/**
+	 * Resets current position of the encoders.
+	 * 
+	 * Since SRX Mag encoders are used in relative mode, this allows us to
+	 * simplify autons by resetting the home position of the robot
+	 */
+	public void resetPosition() {
+		leftTalons[0].setPosition(0);
+		rightTalons[0].setPosition(0);
+	}
+
+	public double getLeftPosition() {
+		return leftTalons[0].getPosition();
+	}
+
+	public double getRightPosition() {
+		return rightTalons[0].getPosition();
+	}
+
+	public double getLeftSpeed() {
+		return leftTalons[0].getSpeed();
+	}
+
+	public double getRightSpeed() {
+		return rightTalons[0].getSpeed();
+	}
+
+	public double getLeftTarget() {
+		return leftTalons[0].get();
+	}
+
+	public double getRightTarget() {
+		return rightTalons[0].get();
+	}
+
+	public double getLeftError() {
+		return leftTalons[0].getError();
+	}
+
+	public double getRightError() {
+		return rightTalons[0].getError();
+	}
+
+	public void initDefaultCommand() {
+		setDefaultCommand(new RawDriveCommand());
+	}
+
+	public void shiftUp() { // TODO: Find if these orientations are correct
+		if (shifter.get() != Value.kForward) {
+			shifter.set(Value.kForward);
+		}
+	}
+
+	public void shiftDown() {
+		if (safeToShift() && shifter.get() != Value.kReverse) {
+			shifter.set(Value.kReverse);
+		}
+	}
+
+	public void shiftUpOmnis() {
+		if (shiftOmnis.get() != Value.kForward) {
+			this.shiftOmnis.set(Value.kForward);
+		}
+	}
+
+	public void shiftDownOmnis() {
+		if (shiftOmnis.get() != Value.kReverse) {
+			this.shiftOmnis.set(Value.kReverse);
+		}
+	}
+
+	private boolean safeToShift() {
+		return Math.max(Math.abs(leftTalons[0].getEncVelocity()),
+				Math.abs(rightTalons[0].getEncVelocity())) < MAX_SAFE_SHIFT_SPEED;
+	}
+
+	public void turnTime(double power) {
+		leftTalons[0].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		rightTalons[0].changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+
+		leftTalons[0].set(power);
+		rightTalons[0].set(-power);
+	}
+
+	public void stop() {
+		drive(0, 0, TalonControlMode.PercentVbus);
+	}
+
+	public double angleToDistance(double angle) {
+		return angle * Math.PI * DRIVE_BASE_WIDTH / 360;
+	}
 
 }
