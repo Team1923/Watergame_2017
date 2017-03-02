@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1923.robot;
 
+import org.usfirst.frc.team1923.robot.commands.driveCommands.DriveTurnCommand;
 import org.usfirst.frc.team1923.robot.commands.driveCommands.ResetEncoderCommand;
 import org.usfirst.frc.team1923.robot.commands.driveCommands.ShiftCommand;
 import org.usfirst.frc.team1923.robot.commands.driveCommands.ShiftOmniCommand;
@@ -57,7 +58,8 @@ public class OI {
 
 		driver.lt.whenActive(new ShiftOmniCommand(true));
 		driver.rt.whenActive(new ShiftOmniCommand(false));
-
+		driver.dPad.down.whenPressed(new DriveTurnCommand(180)); //dpad mapped to turn
+		
 		driver.square.whenActive(new SlideCommand());
 		driver.triangle.whenActive(new GearCommand());
 		driver.circle.whenActive(new GearSetHomeCommand());
