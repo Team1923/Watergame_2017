@@ -22,8 +22,8 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	private final double P_CONSTANT = 0.03; // TODO: Fill in these values
 	private final double I_CONSTANT = 0.00005;
-	private final double D_CONSTANT = 0;
-	private final double F_CONSTANT = 0;
+  private final double D_CONSTANT = 0;
+	private final double F_CONSTANT = 0.01;
 	private final boolean LEFT_REVERSED = true; // Reverse the sensor or
 												// the motor or both?
 	private final boolean RIGHT_REVERSED = false;
@@ -154,13 +154,13 @@ public class DrivetrainSubsystem extends Subsystem {
 		rightTalons[0].setInverted(RIGHT_REVERSED);
 	}
 
-	// public void setPID(double p, double i, double d, double f) {
-	// leftTalons[0].setPID(p, i, d);
-	// leftTalons[0].setF(f);
-	// rightTalons[0].setPID(p, i, d);
-	// rightTalons[0].setF(f);
-	// }
-
+  public void setPID(double p, double i, double d, double f){
+		leftTalons[0].setPID(p, i, d);
+		leftTalons[0].setF(f);
+		rightTalons[0].setPID(p, i, d);
+		rightTalons[0].setF(f);
+	}
+	
 	/**
 	 * Directly sets the input value of the motors
 	 * 
@@ -181,6 +181,15 @@ public class DrivetrainSubsystem extends Subsystem {
 	 */
 	public void disable() {
 		setMasterToMode(TalonControlMode.Disabled);
+	}
+	
+	public void disableControl() {
+		leftTalons[0].disableControl();
+		rightTalons[0].disableControl();
+	}
+	
+	public void enable() {
+		setMasterToMode(TalonControlMode.PercentVbus);
 	}
 
 	public void disableControl() {
@@ -295,6 +304,10 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public static double distanceToRotation(double distance) {
 		return distance / (Math.PI * WHEEL_DIAMETER * DRIVE_RATIO) * DRIVE_CONSTANT;
+	}
+
+	public double angleToDistance(double angle) {
+		return angle * Math.PI * DRIVE_BASE_WIDTH / 360;
 	}
 
 }
