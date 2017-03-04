@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class VisionAutonCenter extends CommandGroup {
+public class VisionAuton extends CommandGroup {
 
-    public VisionAutonCenter() {
+    public VisionAuton() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
