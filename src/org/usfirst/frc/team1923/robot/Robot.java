@@ -9,7 +9,9 @@ import org.usfirst.frc.team1923.robot.subsystems.GearSubsystem;
 import org.usfirst.frc.team1923.robot.commands.DoNothing;
 import org.usfirst.frc.team1923.robot.commands.driveCommands.TurnTimeCommand;
 import org.usfirst.frc.team1923.robot.commands.gearCommands.GearSetHomeCommand;
-import org.usfirst.frc.team1923.robot.commands.visionCommands.VisionAuton;
+import org.usfirst.frc.team1923.robot.commands.visionCommands.VisionAutonCenter;
+import org.usfirst.frc.team1923.robot.commands.visionCommands.VisionAutonLeft;
+import org.usfirst.frc.team1923.robot.commands.visionCommands.VisionAutonRight;
 import org.usfirst.frc.team1923.robot.subsystems.*;
 
 import org.usfirst.frc.team1923.robot.OI;
@@ -71,7 +73,9 @@ public class Robot extends IterativeRobot {
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		chooser.addObject("Turn Time Auto", new TurnTimeCommand(0.25, 0.5));
-		chooser.addObject("Vision Auton" , new VisionAuton());
+		chooser.addObject("Vision Auton Right" , new VisionAutonRight());
+		chooser.addObject("Vision Auton Center" , new VisionAutonCenter());
+		chooser.addObject("Vision Auton Left" , new VisionAutonLeft());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		//SmartDashboard.putData("Turn Auto", chooser);
