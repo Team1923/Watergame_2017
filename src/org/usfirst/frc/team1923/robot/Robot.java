@@ -104,8 +104,9 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.start();
+		}
 	}
 
 	/**
@@ -126,8 +127,9 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
+		}
 		// new GearSetHomeCommand().start();
 		// TODO: Uncomment for COMPETITION!!!
 	}
@@ -137,7 +139,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-
 		SmartDashboard.putNumber("Left Enc", driveSubSys.getLeftPosition());
 		SmartDashboard.putNumber("Right enc", driveSubSys.getRightPosition());
 		DrivetrainSubsystem.TURNING_CONSTANT = SmartDashboard.getNumber("turning", 1.06);
