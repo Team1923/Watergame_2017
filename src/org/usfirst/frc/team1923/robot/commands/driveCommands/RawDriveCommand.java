@@ -13,45 +13,50 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RawDriveCommand extends Command {
 
-	public RawDriveCommand() {
-		requires(Robot.driveSubSys);
-	}
+    public RawDriveCommand() {
+        requires(Robot.driveSubSys);
+    }
 
-	public RawDriveCommand(ProfileCurve p) {
-		requires(Robot.driveSubSys);
-		Robot.driveSubSys.dprofile.setProfile(p);
-	}
+    public RawDriveCommand(ProfileCurve p) {
+        requires(Robot.driveSubSys);
+        Robot.driveSubSys.dprofile.setProfile(p);
+    }
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-	}
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+    }
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		Robot.driveSubSys.drive(Robot.driveSubSys.dprofile.scale(Robot.oi.driver.getLeftY()),
-				Robot.driveSubSys.dprofile.scale(Robot.oi.driver.getRightY()), TalonControlMode.PercentVbus);
-		// SmartDashboard.putNumber("L Enc pos",
-		// Robot.driveSubSys.getLeftPosition());
-		// SmartDashboard.putNumber("R Enc pos",
-		// Robot.driveSubSys.getRightPosition());
-		// SmartDashboard.putNumber("Distance (in): ",
-		// Robot.driveSubSys.frontSonar.getRangeInches());
-	}
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        Robot.driveSubSys.drive(Robot.driveSubSys.dprofile.scale(Robot.oi.driver.getLeftY()),
+                Robot.driveSubSys.dprofile.scale(Robot.oi.driver.getRightY()), TalonControlMode.PercentVbus);
+        // SmartDashboard.putNumber("L Enc pos",
+        // Robot.driveSubSys.getLeftPosition());
+        // SmartDashboard.putNumber("R Enc pos",
+        // Robot.driveSubSys.getRightPosition());
+        // SmartDashboard.putNumber("Distance (in): ",
+        // Robot.driveSubSys.frontSonar.getRangeInches());
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		return false;
-	}
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
 
-	// Called once after isFinished returns true
-	protected void end() {
-		Robot.driveSubSys.stop(); // Stops the robot
-	}
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+        Robot.driveSubSys.stop(); // Stops the robot
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-		end();
-	}
-	
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    @Override
+    protected void interrupted() {
+        end();
+    }
+
 }

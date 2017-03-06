@@ -9,20 +9,21 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  */
 public class ShiftCommand extends InstantCommand {
 
-	private boolean up;
+    private boolean up;
 
-	public ShiftCommand(boolean up) {
-		super();
-		this.up = up;
-	}
+    public ShiftCommand(boolean up) {
+        super();
+        this.up = up;
+    }
 
-	// Called once when the command executes
-	protected void initialize() {
-		if (this.up) {
-			Robot.driveSubSys.shiftUp();
-		} else {
-			Robot.driveSubSys.shiftDown();
-		}
-	}
+    // Called once when the command executes
+    @Override
+    protected void initialize() {
+        if (this.up) {
+            Robot.driveSubSys.shiftUp();
+        } else {
+            Robot.driveSubSys.shiftDown();
+        }
+    }
 
 }

@@ -8,32 +8,37 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveTimeCommand extends Command {
 
-	private double speed;
+    private double speed;
 
-	public DriveTimeCommand(double speed, double timeOut) {
-		requires(Robot.driveSubSys);
-		setTimeout(timeOut);
-		this.speed = speed;
-	}
+    public DriveTimeCommand(double speed, double timeout) {
+        requires(Robot.driveSubSys);
+        setTimeout(timeout);
+        this.speed = speed;
+    }
 
-	protected void initialize() {
+    @Override
+    protected void initialize() {
 
-	}
+    }
 
-	protected void execute() {
-		Robot.driveSubSys.drive(speed, speed, TalonControlMode.Speed);
-	}
+    @Override
+    protected void execute() {
+        Robot.driveSubSys.drive(this.speed, -this.speed, TalonControlMode.Speed);
+    }
 
-	protected boolean isFinished() {
-		return isTimedOut();
-	}
+    @Override
+    protected boolean isFinished() {
+        return isTimedOut();
+    }
 
-	protected void end() {
-		Robot.driveSubSys.stop();
-	}
+    @Override
+    protected void end() {
+        Robot.driveSubSys.stop();
+    }
 
-	protected void interrupted() {
-		end();
-	}
+    @Override
+    protected void interrupted() {
+        end();
+    }
 
 }

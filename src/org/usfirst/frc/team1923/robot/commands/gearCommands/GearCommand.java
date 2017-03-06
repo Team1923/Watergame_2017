@@ -9,29 +9,31 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  */
 public class GearCommand extends InstantCommand {
 
-	private boolean open;
-	private boolean toggle;
+    private boolean open;
+    private boolean toggle;
 
-	public GearCommand() {
-		super();
-		requires(Robot.gearSubSys);
-		toggle = true;
-	}
+    public GearCommand() {
+        super();
+        requires(Robot.gearSubSys);
+        this.toggle = true;
+    }
 
-	public GearCommand(boolean open) {
-		super();
-		requires(Robot.gearSubSys);
-		this.open = open;
-	}
+    public GearCommand(boolean open) {
+        super();
+        requires(Robot.gearSubSys);
+        this.open = open;
+    }
 
-	// Called once when the command executes
-	protected void initialize() {
-		if (toggle) {
-			Robot.gearSubSys.gearShift();
-		} else if (open) {
-			Robot.gearSubSys.gearOpen();
-		} else {
-			Robot.gearSubSys.gearClose();
-		}
-	}
+    // Called once when the command executes
+    @Override
+    protected void initialize() {
+        if (this.toggle) {
+            Robot.gearSubSys.gearShift();
+        } else if (this.open) {
+            Robot.gearSubSys.gearOpen();
+        } else {
+            Robot.gearSubSys.gearClose();
+        }
+    }
+
 }

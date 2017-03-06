@@ -8,29 +8,31 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  *
  */
 public class SlideCommand extends InstantCommand {
-	private boolean open;
-	private boolean toggle;
+    private boolean open;
+    private boolean toggle;
 
-	public SlideCommand() {
-		super();
-		requires(Robot.gearSubSys);
-		toggle = true;
-	}
+    public SlideCommand() {
+        super();
+        requires(Robot.gearSubSys);
+        this.toggle = true;
+    }
 
-	public SlideCommand(boolean open) {
-		super();
-		requires(Robot.gearSubSys);
-		this.open = open;
-	}
+    public SlideCommand(boolean open) {
+        super();
+        requires(Robot.gearSubSys);
+        this.open = open;
+    }
 
-	// Called once when the command executes
-	protected void initialize() {
-		if (toggle) {
-			Robot.gearSubSys.slideShift();
-		} else if (open) {
-			Robot.gearSubSys.slideForward();
-		} else {
-			Robot.gearSubSys.slideReverse();
-		}
-	}
+    // Called once when the command executes
+    @Override
+    protected void initialize() {
+        if (this.toggle) {
+            Robot.gearSubSys.slideShift();
+        } else if (this.open) {
+            Robot.gearSubSys.slideForward();
+        } else {
+            Robot.gearSubSys.slideReverse();
+        }
+    }
+
 }
