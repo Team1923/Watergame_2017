@@ -11,65 +11,72 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GearSubsystem extends Subsystem {
 
-	public DoubleSolenoid slider;
-	public DoubleSolenoid gear;
+    public DoubleSolenoid slider;
+    public DoubleSolenoid gear;
 
-	public boolean gearIsShifted;
-	public boolean slideIsShifted;
+    public boolean gearIsShifted;
+    public boolean slideIsShifted;
 
-	public GearSubsystem() {
-		slider = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.SLIDE_FORWARD_PORT, RobotMap.SLIDE_BACKWARD_PORT);
-		gear = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.MECH_FORWARD_PORT, RobotMap.MECH_BACKWARD_PORT);
-		goHome();
-	}
+    public GearSubsystem() {
+        this.slider = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.SLIDE_FORWARD_PORT,
+                RobotMap.SLIDE_BACKWARD_PORT);
+        this.gear = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.MECH_FORWARD_PORT,
+                RobotMap.MECH_BACKWARD_PORT);
 
-	public void initDefaultCommand() {
-	}
+        goHome();
+    }
 
-	public void slideShift() {
-		if (slideIsShifted)
-			slideReverse();
-		else
-			slideForward();
-	}
+    @Override
+    public void initDefaultCommand() {
+    }
 
-	public void slideReverse() {
-		if (slider.get() != Value.kForward) {
-			slider.set(Value.kForward);
-		}
-		slideIsShifted = false;
-	}
+    public void slideShift() {
+        if (this.slideIsShifted) {
+            slideReverse();
+        } else {
+            slideForward();
+        }
+    }
 
-	public void slideForward() {
-		if (slider.get() != Value.kReverse) {
-			slider.set(Value.kReverse);
-		}
-		slideIsShifted = true;
-	}
+    public void slideReverse() {
+        if (this.slider.get() != Value.kForward) {
+            this.slider.set(Value.kForward);
+        }
+        this.slideIsShifted = false;
+    }
 
-	public void gearShift() {
-		if (gearIsShifted)
-			gearClose();
-		else
-			gearOpen();
-	}
+    public void slideForward() {
+        if (this.slider.get() != Value.kReverse) {
+            this.slider.set(Value.kReverse);
+        }
+        slideIsShifted = true;
+    }
 
-	public void gearClose() {
-		if (gear.get() != Value.kForward) {
-			gear.set(Value.kForward);
-		}
-		gearIsShifted = false;
-	}
+    public void gearShift() {
+        if (this.gearIsShifted) {
+            gearClose();
+        } else {
+            gearOpen();
+        }
+    }
 
-	public void gearOpen() {
-		if (gear.get() != Value.kReverse) {
-			gear.set(Value.kReverse);
-		}
-		gearIsShifted = true;
-	}
+    public void gearClose() {
+        if (this.gear.get() != Value.kForward) {
+            this.gear.set(Value.kForward);
+        }
+        this.gearIsShifted = false;
+    }
 
-	public void goHome() {
-		slideReverse();
-		gearClose();
-	}
+    public void gearOpen() {
+        if (this.gear.get() != Value.kReverse) {
+            this.gear.set(Value.kReverse);
+        }
+        this.gearIsShifted = true;
+    }
+
+    public void goHome() {
+        slideReverse();
+        gearClose();
+    }
+
 }
