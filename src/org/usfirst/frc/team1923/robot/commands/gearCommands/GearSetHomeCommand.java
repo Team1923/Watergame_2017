@@ -9,14 +9,15 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  */
 public class GearSetHomeCommand extends InstantCommand {
 
-	public GearSetHomeCommand() {
-		super();
-		requires(Robot.gearSubSys);
-	}
+    public GearSetHomeCommand() {
+        super();
+        requires(Robot.gearSubSys);
+    }
 
-	// Called once when the command executes
-	protected void initialize() {
-		Robot.gearSubSys.goHome();
-	}
+    // Called once when the command executes
+    @Override
+    protected void initialize() {
+        Robot.gearSubSys.goHome();
+    }
 
 }
