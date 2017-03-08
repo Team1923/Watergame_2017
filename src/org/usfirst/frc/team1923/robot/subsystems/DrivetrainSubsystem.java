@@ -52,7 +52,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	
 	private PigeonImu imu;
 
-	public Ultrasonic frontSonar;
+	//public Ultrasonic frontSonar;
 
 	public DriveProfile dprofile = new DriveProfile(RobotMap.DRIVER_PROFILE);
 
@@ -60,9 +60,6 @@ public class DrivetrainSubsystem extends Subsystem {
 		leftTalons = new CANTalon[RobotMap.LEFT_DRIVE_PORTS.length];
 		rightTalons = new CANTalon[RobotMap.RIGHT_DRIVE_PORTS.length];
 
-		frontSonar = new Ultrasonic(RobotMap.FRONT_SONAR_PING_PORT, RobotMap.FRONT_SONAR_ECHO_PORT, Unit.kMillimeters);
-		frontSonar.setAutomaticMode(true);
-		
 		this.imu = new PigeonImu(RobotMap.IMU_PORT);
 
 		for (int i = 0; i < RobotMap.LEFT_DRIVE_PORTS.length; i++) {
@@ -213,6 +210,10 @@ public class DrivetrainSubsystem extends Subsystem {
 		}
 		set(left, right);
 	}
+	
+	public void auto(double pow, double turn) {
+		set(pow+turn, pow-turn);
+	}
 
 	/**
 	 * Resets current position of the encoders.
@@ -268,7 +269,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void shiftDown() {
-		if (safeToShift() && shifter.get() != Value.kReverse) {
+		if (safeToShift()) {
 			shifter.set(Value.kReverse);
 		}
 	}
@@ -286,8 +287,9 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	private boolean safeToShift() {
-		return Math.max(Math.abs(leftTalons[0].getEncVelocity()),
-				Math.abs(rightTalons[0].getEncVelocity())) < MAX_SAFE_SHIFT_SPEED;
+//		return Math.max(Math.abs(leftTalons[0].getEncVelocity()),
+//				Math.abs(rightTalons[0].getEncVelocity())) < MAX_SAFE_SHIFT_SPEED;
+		return true;
 	}
 	
 	public PigeonImu getImu() {
