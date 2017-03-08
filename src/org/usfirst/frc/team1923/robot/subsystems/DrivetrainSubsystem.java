@@ -19,9 +19,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DrivetrainSubsystem extends Subsystem {
 
-    private final double P_CONSTANT = 0.03; // TODO: Fill in these values
+    private final double P_CONSTANT = 0.05; // TODO: Fill in these values
     private final double I_CONSTANT = 0.00005;
-    private final double D_CONSTANT = 0;
+    private final double D_CONSTANT = 0.0000;
     private final double F_CONSTANT = 0;
     private final boolean LEFT_REVERSED = true; // Reverse the sensor or
                                                 // the motor or both?
@@ -37,7 +37,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
     private final static double DRIVE_BASE_WIDTH = 22.5;
     // Middle of wheels measurement in inches
-    public static double TURNING_CONSTANT = 1.06;
+    public static double TURNING_CONSTANT = 1.12;
     private static final double DRIVE_CONSTANT = 1;
 
     // Arrays of talons to group them together
@@ -56,8 +56,8 @@ public class DrivetrainSubsystem extends Subsystem {
         this.leftTalons = new CANTalon[RobotMap.LEFT_DRIVE_PORTS.length];
         this.rightTalons = new CANTalon[RobotMap.RIGHT_DRIVE_PORTS.length];
 
-        this.frontSonar = new Ultrasonic(RobotMap.FRONT_SONAR_PING_PORT, RobotMap.FRONT_SONAR_ECHO_PORT,
-                Unit.kMillimeters);
+        this.frontSonar = new Ultrasonic(RobotMap.FRONT_SONAR_PING_PORT,
+                RobotMap.FRONT_SONAR_ECHO_PORT, Unit.kMillimeters);
         this.frontSonar.setAutomaticMode(true);
 
         for (int i = 0; i < RobotMap.LEFT_DRIVE_PORTS.length; i++) {
@@ -133,7 +133,7 @@ public class DrivetrainSubsystem extends Subsystem {
         this.leftTalons[0].setP(P_CONSTANT);
         this.leftTalons[0].setI(I_CONSTANT);
         this.leftTalons[0].setD(D_CONSTANT);
-        this.leftTalons[0].setIZone(8000);
+        this.leftTalons[0].setIZone(10000);
         this.leftTalons[0].setAllowableClosedLoopErr(ALLOWABLE_ERROR);
 
         this.rightTalons[0].setProfile(0);
@@ -141,7 +141,7 @@ public class DrivetrainSubsystem extends Subsystem {
         this.rightTalons[0].setP(P_CONSTANT);
         this.rightTalons[0].setI(I_CONSTANT);
         this.rightTalons[0].setD(D_CONSTANT);
-        this.rightTalons[0].setIZone(8000);
+        this.rightTalons[0].setIZone(10000);
         this.rightTalons[0].setAllowableClosedLoopErr(ALLOWABLE_ERROR);
 
         setMasterToMode(TalonControlMode.PercentVbus);
@@ -160,6 +160,15 @@ public class DrivetrainSubsystem extends Subsystem {
     // rightTalons[0].setPID(p, i, d);
     // rightTalons[0].setF(f);
     // }
+
+    public void resetP() {
+        this.setP(P_CONSTANT);
+    }
+
+    public void setP(double p) {
+        this.leftTalons[0].setP(p);
+        this.rightTalons[0].setP(p);
+    }
 
     /**
      * Directly sets the input value of the motors

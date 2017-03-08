@@ -1,9 +1,9 @@
 package org.usfirst.frc.team1923.robot;
 
-import org.usfirst.frc.team1923.robot.commands.driveCommands.DriveDistanceCommand;
 import org.usfirst.frc.team1923.robot.commands.driveCommands.ResetEncoderCommand;
 import org.usfirst.frc.team1923.robot.commands.driveCommands.ShiftCommand;
 import org.usfirst.frc.team1923.robot.commands.driveCommands.ShiftOmniCommand;
+import org.usfirst.frc.team1923.robot.commands.driveCommands.TurnAngleCommand;
 import org.usfirst.frc.team1923.robot.commands.gearCommands.GearCommand;
 import org.usfirst.frc.team1923.robot.commands.gearCommands.GearSetHomeCommand;
 import org.usfirst.frc.team1923.robot.commands.gearCommands.SlideCommand;
@@ -73,10 +73,15 @@ public class OI {
         // driver.dPad.left.whenActive(new TurnAngleCommand(360));
         // driver.dPad.right.whenActive(new TurnAngleCommand(720));
 
-        this.driver.dPad.down.whenActive(new DriveDistanceCommand(50, 50));
-        this.driver.dPad.up.whenActive(new DriveDistanceCommand(100, 100));
-        this.driver.dPad.left.whenActive(new DriveDistanceCommand(200, 200));
-        this.driver.dPad.right.whenActive(new DriveDistanceCommand(300, 300));
+        /*
+         * this.driver.dPad.down.whenActive(new DriveDistanceCommand(50, 50));
+         * this.driver.dPad.up.whenActive(new DriveDistanceCommand(100, 100));
+         * this.driver.dPad.left.whenActive(new DriveDistanceCommand(200, 200));
+         * this.driver.dPad.right.whenActive(new DriveDistanceCommand(300,
+         * 300));
+         */
+
+        this.driver.dPad.left.whenActive(new TurnAngleCommand(60));
     }
 
 }
