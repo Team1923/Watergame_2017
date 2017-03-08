@@ -1,15 +1,16 @@
-package org.usfirst.frc.team1923.robot.commands;
+package org.usfirst.frc.team1923.robot.commands.visionCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class EmptyCommand extends Command {
+public class WaitCommand extends Command {
 
-    public EmptyCommand() {
+    public WaitCommand( double sec) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	setTimeout(sec);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +23,7 @@ public class EmptyCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
