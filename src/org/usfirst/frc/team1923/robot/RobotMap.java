@@ -64,8 +64,6 @@ public class RobotMap {
 														// constructor in drive
 														// subsystem
 	
-	//TODO: Figure out the port for PigeonIMU
-	private static final int IMU_PORT = 0;
 	//Vision Subsystem Constants
 	
 	public static final String CAMERA_IP="10.19.20.109";
