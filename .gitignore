@@ -1,16 +1,3 @@
 bin/
 build/
 dist/
-gradle/
-
-.idea/
-.gradle/
-
-build.gradle
-gradlew
-gradlew.bat
-sysProps.xml
-
-*.iml
-*.ipr
-*.iws
