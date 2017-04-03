@@ -31,7 +31,10 @@ public class DriveDistanceCommand extends Command {
 		requires(Robot.driveSubSys);
 		this.left = left;
 		this.right = right;
-		this.setTimeout(left * 0.05 + 1);
+		
+		double maxDistance = Math.max(Math.abs(left), Math.abs(right));
+		
+		this.setTimeout(maxDistance * 0.05 + 2);
 	}
 
 	// Called just before this Command runs the first time
@@ -67,7 +70,7 @@ public class DriveDistanceCommand extends Command {
 			System.out.println("TIMED OUT");
 		}
 		System.out.println("END END END");
-		// Robot.driveSubSys.resetPosition();
+		Robot.driveSubSys.resetPosition();
 		// Robot.driveSubSys.disable();
 		Robot.driveSubSys.stop();
 	}
