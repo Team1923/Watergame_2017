@@ -2,10 +2,13 @@ package org.usfirst.frc.team1923.robot.commands.vision;
 
 import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
+import org.usfirst.frc.team1923.robot.commands.drive.DriveTimeCommand;
 
 // import com.sun.webkit.Timer;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+private boolean negDist = false;
 
 /**
  * This commands aligns the Robot with the peg or the feeder (depending on
@@ -46,7 +49,10 @@ public class TeleopVisionAlignCommand extends Command {
         // new VisionAlignCommand(); TODO: Change to only run when needed to not
         // waste processor cycles
         Robot.visionSubSys.refresh();
-        if (Robot.visionSubSys.dist >= dist) {
+        if(Robot.visionSubSys.dist < 0){
+            negDist = true;
+        }
+        else if (Robot.visionSubSys.dist >= dist) {
             if (Robot.visionSubSys.turn < -1) {
                 power = 0;
                 turn = 0;
@@ -67,13 +73,16 @@ public class TeleopVisionAlignCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return Robot.visionSubSys.dist <= dist;
+        return (Robot.visionSubSys.dist <= dist) || negDist;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
         Robot.driveSubSys.stop();
+        if(negDist){
+            new DriveTimeCommand(0.8, 2); //incase the ultrasonic throughs a negative value
+        }
     }
 
     // Called when another command which requires one or more of the same
