@@ -5,7 +5,7 @@ import org.usfirst.frc.team1923.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Logs data to a file on robo-rio
  */
 public class LogDataCommand extends Command {
 
@@ -22,7 +22,7 @@ public class LogDataCommand extends Command {
 
     /**
      * This command will have a single shot logging event
-     * 
+     *
      * @param message
      */
     public LogDataCommand(String message) {
@@ -34,9 +34,9 @@ public class LogDataCommand extends Command {
     // Called once when the command executes
     @Override
     protected void initialize() {
-        if (this.message != null) {
+        if (this.message != null)
             Robot.debug.logData(this.message);
-        }
+
     }
 
     @Override
@@ -44,15 +44,21 @@ public class LogDataCommand extends Command {
         Robot.debug.logData();
     }
 
+    /**
+     * Do nothing and wait for the next log event. File closing is handled in
+     * Disabled Init
+     */
     @Override
-    protected void end() { // Do nothing and wait for the next log event. File
-                           // closing is handled in Disabled Init
+    protected void end() {
     }
 
     @Override
     protected void interrupted() {
     }
 
+    /**
+     * finished when there is a message to log
+     */
     @Override
     protected boolean isFinished() {
         return this.message != null;

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
- *
+ * Aligns robot to center peg and places gear
  */
 public class VisionAutonCenter extends CommandGroup {
 

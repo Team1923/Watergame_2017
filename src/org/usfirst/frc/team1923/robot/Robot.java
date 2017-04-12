@@ -22,11 +22,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * This is the start of the program. This class is run automatically when the
+ * robot is activated. The rio then calls the appropriate methods.
  */
 public class Robot extends IterativeRobot {
 
@@ -54,6 +51,7 @@ public class Robot extends IterativeRobot {
 
         oi = new OI();
 
+        // add the autons to the drivers station.
         this.autonChooser.addDefault("Do Nothing Auto", new DoNothingAuton());
         // this.autonChooser.addObject("Log", new LogDataCommand("LOGGED"));
         this.autonChooser.addObject("Drive 2 seconds", new DriveTimeCommand(1.0, 2, true));
@@ -90,11 +88,11 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         visionSubSys.refresh();
+        // get the auton the drivers selected
         this.autonomousCommand = this.autonChooser.getSelected();
 
-        if (this.autonomousCommand != null) {
-            this.autonomousCommand.start();
-        }
+        if (this.autonomousCommand != null)
+            this.autonomousCommand.start(); // start the auton
     }
 
     /**
@@ -110,9 +108,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit() {
-        if (this.autonomousCommand != null) {
-            this.autonomousCommand.cancel();
-        }
+        if (this.autonomousCommand != null)
+            this.autonomousCommand.cancel(); // stop auton
+
     }
 
     /**
@@ -120,9 +118,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopPeriodic() {
-        if (RobotMap.DEBUG) {
+        if (RobotMap.DEBUG)
             SmartDashboard.putNumber("Ultrasonic", Robot.visionSubSys.getDistance());
-        }
+
         Scheduler.getInstance().run();
     }
 

@@ -16,9 +16,9 @@ public class ResetEncoderCommand extends InstantCommand {
 
     @Override
     protected void initialize() {
-        if (RobotMap.DEBUG) {
+        if (RobotMap.DEBUG)
             System.out.println("Reset Position");
-        }
+
         Robot.driveSubSys.resetPosition();
     }
 

@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Handles logging debug info to a file on robo rio. including data that cannot
+ * be displayed on the drivers station
  */
 public class DebugSubsystem extends Subsystem {
 
@@ -30,9 +31,10 @@ public class DebugSubsystem extends Subsystem {
      */
     public DebugSubsystem() {
 
-        filePath = "/home/lvuser/" + System.currentTimeMillis() % 10000 + "match.log";
+        double logTime = System.currentTimeMillis() % 10000;
+        this.filePath = "/home/lvuser/" + logTime + "match.log";
 
-        lastLog = 0;
+        this.lastLog = 0;
         this.refresh_time = 100;
     }
 
@@ -58,45 +60,63 @@ public class DebugSubsystem extends Subsystem {
     public void logData(String event_message) {
         if (logger == null) {
             try {
-                logger = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+                logger = new PrintWriter(new BufferedWriter(new FileWriter(this.filePath, true)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        if (this.lastLog + refresh_time > System.currentTimeMillis()) {
+        if (this.lastLog + this.refresh_time > System.currentTimeMillis())
             return;
-        }
+
         this.lastLog = System.currentTimeMillis();
 
         String control_mode = "";
-        if (Robot.dstation.isAutonomous()) {
+        if (Robot.dstation.isAutonomous())
             control_mode = "Auto";
-        } else if (Robot.dstation.isOperatorControl()) {
+        else if (Robot.dstation.isOperatorControl())
             control_mode = "Tele";
-        } else if (Robot.dstation.isDisabled()) {
+        else if (Robot.dstation.isDisabled())
             control_mode = "Disabled";
-        }
+
+        // data to log out
+        double matchTime = DriverStation.getInstance().getMatchTime();
+        boolean brownOut = Robot.dstation.isBrownedOut();
+        double visionDistance = Robot.visionSubSys.getDistance();
+        double centerX = Robot.visionSubSys.getCenterX();
+        boolean visionIsFound = Robot.visionSubSys.isFound();
+        double visionWidth = Robot.visionSubSys.getWidth();
+        double visionTurn = Robot.visionSubSys.getTurn();
+        double heading = Robot.driveSubSys.getImu().GetFusedHeading(new PigeonImu.FusionStatus());
+        double leftPos = Robot.driveSubSys.getLeftPosition();
+        double rightPos = Robot.driveSubSys.getRightPosition();
 
         String message = String.format(
-                "[%f %s] Brown out: %s, Front Ultra: %f, CenterX: %f, Vision Found: %b, Target Wdith: %f, Calc Turn: %f, IMU Heading: %f, Left Enc: %f, Right Enc: %f\n",
-                DriverStation.getInstance().getMatchTime(), control_mode, Robot.dstation.isBrownedOut(), Robot.visionSubSys.getDistance(),
-                Robot.visionSubSys.getCenterX(), Robot.visionSubSys.isFound(), Robot.visionSubSys.getWidth(), Robot.visionSubSys.getTurn(),
-                Robot.driveSubSys.getImu().GetFusedHeading(new PigeonImu.FusionStatus()), Robot.driveSubSys.getLeftPosition(),
-                Robot.driveSubSys.getRightPosition());
+                "[%f %s] Brown out: %s, Front Ultra: %f, CenterX: %f, Vision Found: %b, Target Wdith: %f, Calc Turn: %f, IMU Heading: %f, Left Enc: %f, Right Enc: %f%n",
+                matchTime, control_mode, brownOut, visionDistance, centerX, visionIsFound, visionWidth, visionTurn, heading, leftPos, rightPos);
+
         message += event_message;
         if (logger != null) {
             logger.println(message);
             System.out.println(message);
-        } else {
-            System.out.println("Logger is null");
-        }
+        } else System.out.println("Logger is null");
+
+        /*
+        String message = String.format(
+                "[%f %s] Brown out: %s, Front Ultra: %f, CenterX: %f, Vision Found: %b, Target Wdith: %f, Calc Turn: %f, IMU Heading: %f, Left Enc: %f, Right Enc: %f%n",
+                DriverStation.getInstance().getMatchTime(), control_mode, Robot.dstation.isBrownedOut(), Robot.visionSubSys.getDistance(),
+                Robot.visionSubSys.getCenterX(), Robot.visionSubSys.isFound(), Robot.visionSubSys.getWidth(), Robot.visionSubSys.getTurn(),
+                Robot.driveSubSys.getImu().GetFusedHeading(new PigeonImu.FusionStatus()), Robot.driveSubSys.getLeftPosition(),
+                Robot.driveSubSys.getRightPosition());
+        */
+        
     }
 
     public void logData() {
         this.logData("");
     }
 
+    // default command to call is LogDataCommand
     @Override
     public void initDefaultCommand() {
         new LogDataCommand();

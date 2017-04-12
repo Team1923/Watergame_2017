@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1923.robot.utils.controller;
 
-import edu.wpi.first.wpilibj.buttons.Button;
+import java.awt.Button;
+
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class XboxController extends Controller {

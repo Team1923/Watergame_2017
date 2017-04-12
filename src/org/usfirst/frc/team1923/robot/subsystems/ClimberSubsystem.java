@@ -7,19 +7,15 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class ClimberSubsystem extends Subsystem {
 
-	private final double P_CONSTANT = 0;
-	private final double I_CONSTANT = 0;
-	private final double D_CONSTANT = 0;
-	public final double OVER_CURRENT_RATIO = 5; // Amps / Volt
-	public final double CLIMB_POWER = 0.8;
-	private CANTalon leftClimb, rightClimb;
+    private final double P_CONSTANT = 0;
+    private final double I_CONSTANT = 0;
+    private final double D_CONSTANT = 0;
+    public final double OVER_CURRENT_RATIO = 5; // Amps / Volt
+    public final double CLIMB_POWER = 0.8;
+    private CANTalon leftClimb, rightClimb;
 
     /**
      * Creates an instance of the Climber subsystem with two talons Creates the
@@ -38,26 +34,37 @@ public class ClimberSubsystem extends Subsystem {
         this.leftClimb.configPeakOutputVoltage(12, -12);
         this.leftClimb.configNominalOutputVoltage(0, 0);
 
-        this.leftClimb.setPID(P_CONSTANT, I_CONSTANT, D_CONSTANT);
+        this.leftClimb.setPID(this.P_CONSTANT, this.I_CONSTANT, this.D_CONSTANT);
     }
 
+    /**
+     * @param power
+     *            the power to climb at
+     */
     public void set(double power) {
-        leftClimb.set(power);
+        this.leftClimb.set(power);
     }
 
+    /**
+     * @return current of left climb
+     */
     public double getCurrent() {
         return this.leftClimb.getOutputCurrent();
     }
 
+    /**
+     * @return greater of left or right current
+     */
     public double getMaxCurrent() {
         return Math.max(this.leftClimb.getOutputCurrent(), this.rightClimb.getOutputCurrent());
     }
-		//SmartDashboard.putNumber("Max Climber Amerage: " , getMaxCurrent());
+    // SmartDashboard.putNumber("Max Climber Amerage: " , getMaxCurrent());
 
     public double getVoltage() {
         return this.leftClimb.getOutputVoltage();
     }
 
+    // default command to call is the climb command
     @Override
     public void initDefaultCommand() {
         setDefaultCommand(new ClimbCommand());

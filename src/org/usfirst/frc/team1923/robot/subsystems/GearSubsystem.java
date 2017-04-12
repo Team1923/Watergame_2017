@@ -26,53 +26,48 @@ public class GearSubsystem extends Subsystem {
     }
 
     public void slideShift() {
-        if (this.slideShifted) {
+        if (this.slideShifted)
             slideReverse();
-        } else {
-            slideForward();
-        }
+        else slideForward();
     }
 
     public void slideReverse() {
-        if (this.slider.get() != Value.kForward) {
+        if (this.slider.get() != Value.kForward)
             this.slider.set(Value.kForward);
-        }
 
         this.slideShifted = false;
     }
 
     public void slideForward() {
-        if (this.slider.get() != Value.kReverse) {
+        if (this.slider.get() != Value.kReverse)
             this.slider.set(Value.kReverse);
-        }
 
         this.slideShifted = true;
     }
 
     public void gearShift() {
-        if (this.gearShifted) {
+        if (this.gearShifted)
             gearClose();
-        } else {
-            gearOpen();
-        }
+        else gearOpen();
     }
 
     public void gearClose() {
-        if (this.gear.get() != Value.kForward) {
+        if (this.gear.get() != Value.kForward)
             this.gear.set(Value.kForward);
-        }
 
         this.gearShifted = false;
     }
 
     public void gearOpen() {
-        if (this.gear.get() != Value.kReverse) {
+        if (this.gear.get() != Value.kReverse)
             this.gear.set(Value.kReverse);
-        }
 
         this.gearShifted = true;
     }
 
+    /**
+     * sets gear to default state
+     */
     public void goHome() {
         slideReverse();
         gearClose();

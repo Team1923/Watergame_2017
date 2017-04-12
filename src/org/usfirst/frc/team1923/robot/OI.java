@@ -25,6 +25,8 @@ public class OI {
     public OI() {
         // Creates two ps4 controllers
         this.driver = new PS4Controller(RobotMap.DRIVER_CONTROLLER_PORT);
+
+        // How far you need to press this trigger to activate a button press
         this.driver.lt.setTriggerSensitivity(0.5);
         this.driver.rt.setTriggerSensitivity(0.5);
 
@@ -44,10 +46,10 @@ public class OI {
 
         // Vision Commands
         Command pegAlign = new VisionAlignCommand(false);
-        driver.square.whileHeld(pegAlign);
+        this.driver.square.whileHeld(pegAlign);
         Command feederAlign = new VisionAlignCommand(true);
-        driver.triangle.whileHeld(feederAlign);
+        this.driver.triangle.whileHeld(feederAlign);
         Command refresh = new VisionProcessing();
-        driver.circle.whileHeld(refresh);
+        this.driver.circle.whileHeld(refresh);
     }
 }
