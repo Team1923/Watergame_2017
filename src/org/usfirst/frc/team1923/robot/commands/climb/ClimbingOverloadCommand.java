@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ClimbingOverloadCommand extends CommandGroup {
 
     /**
-     * UNIMPLEMENTED This will automatically detect overload on the climbers to
+     * UNIMPLEMENTED: This will automatically detect overload on the climbers to
      * prevent damage to the mechanism or the field element
      */
     public ClimbingOverloadCommand() {

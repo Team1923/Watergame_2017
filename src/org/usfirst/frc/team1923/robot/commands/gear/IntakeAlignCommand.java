@@ -1,11 +1,13 @@
 package org.usfirst.frc.team1923.robot.commands.gear;
 
+import org.usfirst.frc.team1923.robot.Robot;
+import org.usfirst.frc.team1923.robot.utils.PIDController;
+
 import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1923.robot.Robot;
-import org.usfirst.frc.team1923.robot.utils.PIDController;
 
 public class IntakeAlignCommand extends Command {
 
@@ -36,19 +38,19 @@ public class IntakeAlignCommand extends Command {
         this.leftUltrasonic = Robot.visionSubSys.getUltrasonic();
         this.rightUltrasonic = Robot.visionSubSys.getUltrasonic();
 
-        this.leftController = new PIDController(P_CONST, I_CONST, D_CONST, this.leftUltrasonic, this.leftDrive);
+        this.leftController = new PIDController(this.P_CONST, this.I_CONST, this.D_CONST, this.leftUltrasonic, this.leftDrive);
         this.leftController.setContinuous(true);
-        this.leftController.setAbsoluteTolerance(TOLERANCE);
+        this.leftController.setAbsoluteTolerance(this.TOLERANCE);
         this.leftController.setOutputRange(-1, 1);
-        this.leftController.setSetpoint(TARGET);
-        this.leftController.setIZone(I_ZONE);
+        this.leftController.setSetpoint(this.TARGET);
+        this.leftController.setIZone(this.I_ZONE);
 
-        this.rightController = new PIDController(P_CONST, I_CONST, D_CONST, this.rightUltrasonic, this.rightDrive);
+        this.rightController = new PIDController(this.P_CONST, this.I_CONST, this.D_CONST, this.rightUltrasonic, this.rightDrive);
         this.rightController.setContinuous(true);
-        this.rightController.setAbsoluteTolerance(TOLERANCE);
+        this.rightController.setAbsoluteTolerance(this.TOLERANCE);
         this.rightController.setOutputRange(-1, 1);
-        this.rightController.setSetpoint(TARGET);
-        this.rightController.setIZone(I_ZONE);
+        this.rightController.setSetpoint(this.TARGET);
+        this.rightController.setIZone(this.I_ZONE);
 
         this.setTimeout(10);
     }
@@ -66,7 +68,7 @@ public class IntakeAlignCommand extends Command {
 
     @Override
     protected boolean isFinished() {
-        return (this.leftController.onTarget() && this.rightController.onTarget()) || this.isTimedOut();
+        return this.leftController.onTarget() && this.rightController.onTarget() || this.isTimedOut();
     }
 
     @Override
@@ -80,7 +82,6 @@ public class IntakeAlignCommand extends Command {
         this.end();
     }
 
-
     public class Drivetrain implements PIDOutput {
 
         private Side side;
@@ -92,9 +93,9 @@ public class IntakeAlignCommand extends Command {
         @Override
         public void pidWrite(double output) {
             if (this.side == Side.LEFT) {
-                Robot.driveSubSys.setLeft(output * POWER, CANTalon.TalonControlMode.Voltage);
+                Robot.driveSubSys.setLeft(output * IntakeAlignCommand.this.POWER, CANTalon.TalonControlMode.Voltage);
             } else {
-                Robot.driveSubSys.setRight(output * POWER, CANTalon.TalonControlMode.Voltage);
+                Robot.driveSubSys.setRight(output * IntakeAlignCommand.this.POWER, CANTalon.TalonControlMode.Voltage);
             }
         }
 

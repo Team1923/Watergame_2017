@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
- *
+ * Aligns robot to right peg and places gear
  */
 public class VisionAutonRight extends CommandGroup {
 

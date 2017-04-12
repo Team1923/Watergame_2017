@@ -6,6 +6,9 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Drives based on driver input
+ */
 public class RawDriveCommand extends Command {
 
     public RawDriveCommand() {
@@ -32,6 +35,9 @@ public class RawDriveCommand extends Command {
         Robot.driveSubSys.stop();
     }
 
+    /**
+     * Command never stops
+     */
     @Override
     public boolean isFinished() {
         return false;

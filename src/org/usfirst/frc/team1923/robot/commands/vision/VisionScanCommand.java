@@ -13,7 +13,7 @@ public class VisionScanCommand extends Command {
 
     /**
      * Turns a certain direction in order to look for the vision target
-     * 
+     *
      * @param power
      *            Power of the left wheel
      * @param timeOut
@@ -33,7 +33,7 @@ public class VisionScanCommand extends Command {
     @Override
     protected void execute() {
         Robot.visionSubSys.refresh();
-        Robot.driveSubSys.drive(power, -power, TalonControlMode.PercentVbus);
+        Robot.driveSubSys.drive(this.power, -this.power, TalonControlMode.PercentVbus);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class VisionScanCommand extends Command {
 
     @Override
     protected boolean isFinished() {
-        return isTimedOut() || (Robot.visionSubSys.centerx > 30 && Robot.visionSubSys.centerx < 280);
+        return isTimedOut() || Robot.visionSubSys.centerx > 30 && Robot.visionSubSys.centerx < 280;
     }
 
 }

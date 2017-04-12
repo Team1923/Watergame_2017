@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Turns robot a set number of degrees
+ */
 public class GyroTurnCommand extends Command {
 
     // TODO: Tune PID constants
@@ -32,7 +35,7 @@ public class GyroTurnCommand extends Command {
 
     /**
      * This command turns the robot to a specific degree with gyro PID
-     * 
+     *
      * @param degrees
      *            Degrees to turn to the right
      */
@@ -44,13 +47,13 @@ public class GyroTurnCommand extends Command {
 
         this.target = new ImuTarget();
         this.output = new Drivetrain();
-        this.controller = new PIDController(P_CONST, I_CONST, D_CONST, this.target, this.output);
+        this.controller = new PIDController(this.P_CONST, this.I_CONST, this.D_CONST, this.target, this.output);
         this.controller.setContinuous(true);
-        this.controller.setAbsoluteTolerance(TOLERANCE);
+        this.controller.setAbsoluteTolerance(this.TOLERANCE);
         this.controller.setOutputRange(-1, 1);
         this.controller.setInputRange(-360, 360);
         this.controller.setSetpoint(this.degrees);
-        this.controller.setIZone(I_ZONE);
+        this.controller.setIZone(this.I_ZONE);
 
         this.setTimeout(Math.abs(this.degrees) * 0.005 + 1);
     }
@@ -62,13 +65,16 @@ public class GyroTurnCommand extends Command {
 
     @Override
     protected void execute() {
-        // Debug
+
         if (RobotMap.DEBUG) {
             double currentAngle = this.target.pidGet();
             System.out.println("target = " + this.degrees + ", current = " + currentAngle + ", error = " + (this.degrees - currentAngle));
         }
     }
 
+    /**
+     * finished when - timed out or - reached target heading
+     */
     @Override
     protected boolean isFinished() {
         return this.controller.onTarget() || this.isTimedOut();

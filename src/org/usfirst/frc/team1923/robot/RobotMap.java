@@ -2,6 +2,9 @@ package org.usfirst.frc.team1923.robot;
 
 import org.usfirst.frc.team1923.robot.utils.DriveProfile.ProfileCurve;
 
+/**
+ * This class declares constants that are used throughout the code.
+ */
 public class RobotMap {
 
     /**

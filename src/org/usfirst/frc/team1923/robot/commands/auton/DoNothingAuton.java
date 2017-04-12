@@ -2,11 +2,12 @@ package org.usfirst.frc.team1923.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * This class does nothing. It finishes immediately. Robot should default to
+ * this auton if another one is not selected.
+ */
 public class DoNothingAuton extends Command {
 
-    /**
-     * This class does nothing. It finishes immediately
-     */
     public DoNothingAuton() {
 
     }

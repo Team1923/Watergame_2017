@@ -21,6 +21,8 @@ https://www.tutorialspoint.com/java/java_documentation.htm
 
 Learn Git:
 GUI (Recommended for beginners): https://www.git-tower.com/learn/git/ebook/en/desktop-gui/introduction#start or Command Line (Advanced): https://www.git-tower.com/learn/git/ebook/en/command-line/introduction
+Using eclipse with git: http://eclipsesource.com/blogs/tutorials/egit-tutorial/
+https://wiki.eclipse.org/EGit/User_Guide
 
 General FRC Stuff:
 FRC Blog: http://www.firstinspires.org/robotics/frc/blog/
@@ -32,3 +34,7 @@ Resource Lib:http://www.firstinspires.org/resource-library?flagged=All&combine=&
 TALON Software Documentation: https://content.vexrobotics.com/vexpro/pdf/Talon-SRX-Software-Reference-Manual-03302016.pdf
 
 TALON Example Codes: https://github.com/CrossTheRoadElec/FRC-Examples
+
+team 1923 lessons on java, git and wpilib: https://github.com/TimMagoun/ProgrammingLesson
+An intro to wpilib: https://github.com/TimMagoun/ProgrammingLesson/blob/master/lessons/frc/intro_wpilib.pdf
+

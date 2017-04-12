@@ -6,7 +6,7 @@ public class TurnAngleCommand extends DriveDistanceCommand {
 
     /**
      * Turns a set angle using encoder counts
-     * 
+     *
      * @param angle
      *            angle to turn right
      */

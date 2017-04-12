@@ -15,7 +15,7 @@ public class AutonGearCommand extends InstantCommand {
     public AutonGearCommand() {
         super();
         requires(Robot.gearSubSys);
-        toggle = true;
+        this.toggle = true;
     }
 
     public AutonGearCommand(boolean open) {
@@ -28,9 +28,9 @@ public class AutonGearCommand extends InstantCommand {
     @Override
     protected void initialize() {
         if (Robot.visionSubSys.found) {
-            if (toggle) {
+            if (this.toggle) {
                 Robot.gearSubSys.gearShift();
-            } else if (open) {
+            } else if (this.open) {
                 Robot.gearSubSys.gearOpen();
             } else {
                 Robot.gearSubSys.gearClose();
