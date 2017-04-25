@@ -9,7 +9,7 @@ public class IndexerCommand extends InstantCommand {
     private double speed;
 
     public IndexerCommand(boolean on) {
-        this.speed = on ? 0.3 : 0;
+        this.speed = on ? 0.4 : 0;
     }
 
     public IndexerCommand(double speed) {

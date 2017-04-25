@@ -5,6 +5,7 @@ import org.usfirst.frc.team1923.robot.RobotMap;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,10 +14,10 @@ public class ShooterSubsystem extends Subsystem {
 
     public static final double ALLOWABLE_ERROR = 100;
 
-    private final double P_CONSTANT = 0;
-    private final double I_CONSTANT = 0;
-    private final double D_CONSTANT = 0;
-    private final double F_CONSTANT = 0.7 * 1023 / 18000 / 60 / 10 * 4096;
+    private final double P_CONSTANT = 0.63;
+    private final double I_CONSTANT = 0.000005;
+    private final double D_CONSTANT = 0.1;
+    private final double F_CONSTANT = 0.11;
 
     private CANTalon shooter;
     private CANTalon indexer;
@@ -26,7 +27,7 @@ public class ShooterSubsystem extends Subsystem {
         this.shooter = new CANTalon(RobotMap.SHOOTER_PORT);
         this.indexer = new CANTalon(RobotMap.INDEXER_PORT);
 
-        this.shooter.configPeakOutputVoltage(12, -12);
+        this.shooter.configPeakOutputVoltage(12, 0);
         this.shooter.configNominalOutputVoltage(0, 0);
 
         this.shooter.setP(this.P_CONSTANT);
@@ -36,9 +37,13 @@ public class ShooterSubsystem extends Subsystem {
 
         this.shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
         this.shooter.setCurrentLimit(40);
-        // this.shooter.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
-        this.shooter.reverseSensor(false);
+        // this.shooter.setV
+        this.shooter.configEncoderCodesPerRev(4096);
+        this.shooter.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+        this.shooter.reverseSensor(true);
         this.shooter.reverseOutput(false);
+        this.shooter.changeControlMode(TalonControlMode.Speed);
+
     }
 
     public void set(double power) {
@@ -52,6 +57,7 @@ public class ShooterSubsystem extends Subsystem {
         this.shooter.changeControlMode(TalonControlMode.Speed);
         this.speed = this.shooter.getSpeed();
         SmartDashboard.putNumber("Shooter Encoder Speed", this.speed);
+        SmartDashboard.putNumber("PID Error", shooter.getError());
         this.shooter.setSetpoint(setpoint);
     }
 
@@ -74,4 +80,8 @@ public class ShooterSubsystem extends Subsystem {
         return this.shooter.getError();
     }
 
+    public void refresh() {
+        SmartDashboard.putNumber("Shooter Speed", shooter.getSpeed());
+        SmartDashboard.putNumber("PID Error", shooter.getError());
+    }
 }

@@ -42,9 +42,9 @@ public class OI {
         this.op.x.whenActive(new SlideCommand());
         this.op.y.whenActive(new GearCommand());
         // this.op.b.whenActive(new GearSetHomeCommand());
-        this.op.rb.whenActive(new ShooterCommand(6000));
+        this.op.rb.whenActive(new ShooterCommand(8620)); // 10100
         this.op.lb.whenActive(new ShooterCommand(0));
-        this.op.a.whenActive(new IndexerCommand(true));
+        this.op.a.whileHeld(new IndexerCommand(true));
         this.op.b.whenActive(new IndexerCommand(false));
 
         // Vision Commands

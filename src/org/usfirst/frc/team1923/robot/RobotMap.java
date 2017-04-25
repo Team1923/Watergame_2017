@@ -83,7 +83,6 @@ public class RobotMap {
      * Settings and ports for GRIP and vision processing.
      */
     public static final String GEAR_CAMERA_IP = "10.19.23.15";
-    public static final String SHOOTER_CAMERA_IP = "10.19.23.16";
     public static final int IMG_WIDTH = 320;
     public static final int IMG_HEIGHT = 240;
     public static final double TURN_CONSTANT = 1000;

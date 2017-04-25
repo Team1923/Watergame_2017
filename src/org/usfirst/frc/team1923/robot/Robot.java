@@ -125,6 +125,7 @@ public class Robot extends IterativeRobot {
         if (RobotMap.DEBUG) {
             SmartDashboard.putNumber("Ultrasonic", Robot.visionSubSys.getDistance());
         }
+        shooterSubSys.refresh();
         Scheduler.getInstance().run();
     }
 
