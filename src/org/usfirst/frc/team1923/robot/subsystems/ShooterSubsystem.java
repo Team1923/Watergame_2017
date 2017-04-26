@@ -15,15 +15,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShooterSubsystem extends Subsystem {
 
-    private final double P_CONSTANT = 0.63;
-    private final double I_CONSTANT = 0.000005;
-    private final double D_CONSTANT = 0.1;
-    private final double F_CONSTANT = 0.11;// * 1023 / 18000 / 60 / 10 * 4096;
+    private final double P_CONSTANT = 0.3;// 0.63;
+    private final double I_CONSTANT = 0;// 0.000005;
+    private final double D_CONSTANT = 0.3;// 0.1;
+    private final double F_CONSTANT = 0.01;// 1023 / (10000 / 60 / 10 * 4096);
     private CANTalon shooter;
     private CANTalon indexer;
     private double speed;
 
-    public final double allowableError = 100;
+    public final double allowableError = 150;
 
     public ShooterSubsystem() {
         this.shooter = new CANTalon(RobotMap.SHOOTER_PORT);

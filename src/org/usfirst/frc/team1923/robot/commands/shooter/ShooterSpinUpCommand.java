@@ -20,6 +20,7 @@ public class ShooterSpinUpCommand extends Command {
     public ShooterSpinUpCommand(double setpoint) {
         this.setpoint = setpoint;
         requires(Robot.shooterSubSys);
+        // setTimeout(1.5);
     }
 
     @Override
@@ -33,10 +34,10 @@ public class ShooterSpinUpCommand extends Command {
 
     @Override
     protected boolean isFinished() {
-        return Robot.shooterSubSys.getError() < Robot.shooterSubSys.allowableError; // TODO:
-                                                                                    // Change
-                                                                                    // this
-                                                                                    // error
+        return (Robot.shooterSubSys.getError() < Robot.shooterSubSys.allowableError); // TODO:
+        // Change
+        // this
+        // error
         // value
     }
 

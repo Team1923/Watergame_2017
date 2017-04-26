@@ -48,7 +48,7 @@ public class VisionGearAlignCommand extends Command {
             Robot.visionSubSys.found = false;
         } else {
             if (Robot.visionSubSys.dist >= 30)
-                power = 0.45;
+                power = 0.6;
             else power = 0.2;
 
             Robot.visionSubSys.found = true;

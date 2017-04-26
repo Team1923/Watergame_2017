@@ -2,7 +2,6 @@ package org.usfirst.frc.team1923.robot.commands.shooter;
 
 import org.usfirst.frc.team1923.robot.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -23,10 +22,10 @@ public class IndexerOnCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.shooterSubSys.index(0.4);
-        Timer.delay(0);
+        Robot.shooterSubSys.index(0.35);
+        // Timer.delay(0.3);
         // Robot.shooterSubSys.index(0);
-        Timer.delay(0);
+        // Timer.delay(0.3);
     }
 
     // Make this return true when this Command no longer needs to run execute()

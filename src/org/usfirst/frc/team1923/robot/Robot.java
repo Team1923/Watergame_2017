@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1923.robot;
 
 import org.usfirst.frc.team1923.robot.commands.auton.DoNothingAuton;
+import org.usfirst.frc.team1923.robot.commands.auton.ShootGearAuton;
 import org.usfirst.frc.team1923.robot.commands.auton.VisionAutonCenter;
 import org.usfirst.frc.team1923.robot.commands.auton.VisionAutonLeft;
 import org.usfirst.frc.team1923.robot.commands.auton.VisionAutonRight;
@@ -64,6 +65,7 @@ public class Robot extends IterativeRobot {
         this.autonChooser.addObject("Vision Auton Center", new VisionAutonCenter());
         this.autonChooser.addObject("Vision Auton Left", new VisionAutonLeft());
         this.autonChooser.addObject("Drive 100 inches", new DriveDistanceCommand(100));
+        this.autonChooser.addObject("Center Shooting Auton", new ShootGearAuton());
 
         // SmartDashboard.putData("Motion Magic SRX", new
         // DriveMotionMagicCommand(100));

@@ -95,6 +95,6 @@ public class RobotMap {
      */
     // Setpoint for speed of shooter from center gear auton
     public static final double SHOOTER_CENTER_SETPOINT_PEG = 2000;
-    public static final double SHOOTER_CENTER_SETPOINT_BASE = 2000;
+    public static final double SHOOTER_CENTER_SETPOINT_BASE = 9750;
 
 }

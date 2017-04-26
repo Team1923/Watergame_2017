@@ -6,6 +6,8 @@ import org.usfirst.frc.team1923.robot.commands.drive.DriveTimeCommand;
 import org.usfirst.frc.team1923.robot.commands.drive.ShiftCommand;
 import org.usfirst.frc.team1923.robot.commands.gear.AutonGearCommand;
 import org.usfirst.frc.team1923.robot.commands.gear.SlideCommand;
+import org.usfirst.frc.team1923.robot.commands.shooter.IndexerOffCommand;
+import org.usfirst.frc.team1923.robot.commands.shooter.IndexerOnCommand;
 import org.usfirst.frc.team1923.robot.commands.shooter.ShooterSetCommand;
 import org.usfirst.frc.team1923.robot.commands.shooter.ShooterSpinUpCommand;
 import org.usfirst.frc.team1923.robot.commands.vision.VisionGearAlignCommand;
@@ -21,8 +23,10 @@ public class ShootGearAuton extends CommandGroup {
     public ShootGearAuton() {
         // Shoots Balls
         addSequential(new ShooterSpinUpCommand(RobotMap.SHOOTER_CENTER_SETPOINT_BASE));
-        // addSequential(new IndexOnCommand(true));
+        addSequential(new WaitCommand(0.5));
+        addSequential(new IndexerOnCommand());
         addSequential(new WaitCommand(4));
+        addParallel(new IndexerOffCommand());
         addSequential(new ShooterSetCommand(0));
 
         // Drops of gear on center peg
@@ -34,9 +38,9 @@ public class ShootGearAuton extends CommandGroup {
         addSequential(new WaitCommand(0.2));
 
         addSequential(new SlideCommand(true));
-        addSequential(new WaitCommand(0.4));
+        addSequential(new WaitCommand(0.2));
         addSequential(new AutonGearCommand(true));
-        addSequential(new WaitCommand(0.4));
+        addSequential(new WaitCommand(0.2));
         addSequential(new DriveTimeCommand(-0.5, 1));
     }
 }
