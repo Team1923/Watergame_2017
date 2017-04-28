@@ -4,6 +4,7 @@ import org.usfirst.frc.team1923.robot.commands.drive.ResetEncoderCommand;
 import org.usfirst.frc.team1923.robot.commands.drive.ShiftCommand;
 import org.usfirst.frc.team1923.robot.commands.drive.ShiftOmniCommand;
 import org.usfirst.frc.team1923.robot.commands.gear.GearCommand;
+import org.usfirst.frc.team1923.robot.commands.gear.GearSetHomeCommand;
 import org.usfirst.frc.team1923.robot.commands.gear.SlideCommand;
 import org.usfirst.frc.team1923.robot.commands.shooter.IndexerOffCommand;
 import org.usfirst.frc.team1923.robot.commands.shooter.IndexerOnCommand;
@@ -42,11 +43,13 @@ public class OI {
 
         this.op.x.whenActive(new SlideCommand());
         this.op.y.whenActive(new GearCommand());
-        // this.op.b.whenActive(new GearSetHomeCommand());
-        this.op.rb.whenActive(new ShooterSpinUpCommand(9730));// 10100
+        this.op.b.whenActive(new GearSetHomeCommand());
+        this.op.rb.whenActive(new ShooterSpinUpCommand(RobotMap.SHOOTER_CENTER_SETPOINT));
         this.op.lb.whenActive(new ShooterSpinUpCommand(0));
         this.op.a.whileHeld(new IndexerOnCommand());
-        this.op.b.whenActive(new IndexerOffCommand());
+
+        this.op.start.whenActive(new ShooterSpinUpCommand(3500)); // 9750
+        this.op.back.whenActive(new IndexerOffCommand());
 
         // Vision Commands
         Command pegAlign = new VisionGearAlignCommand(false);

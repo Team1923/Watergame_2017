@@ -42,14 +42,14 @@ public class RobotMap {
     /**
      * Climber slider port numbers
      */
-    public static final int SLIDE_FORWARD_PORT = 6;
-    public static final int SLIDE_BACKWARD_PORT = 7;
+    public static final int SLIDE_FORWARD_PORT = 2;// 6
+    public static final int SLIDE_BACKWARD_PORT = 3;// 7
 
     /**
      * Gear box shifting pistons ports on the PCM.
      */
-    public static final int SHIFT_FORWARD_PORT = 2;
-    public static final int SHIFT_BACKWARD_PORT = 3;
+    public static final int SHIFT_FORWARD_PORT = 6;// 2
+    public static final int SHIFT_BACKWARD_PORT = 7;// 3
 
     /**
      * Mechanism actuator piston ports.
@@ -94,7 +94,7 @@ public class RobotMap {
      * Shooter Constants
      */
     // Setpoint for speed of shooter from center gear auton
-    public static final double SHOOTER_CENTER_SETPOINT_PEG = 2000;
-    public static final double SHOOTER_CENTER_SETPOINT_BASE = 9750;
+    public static final double SHOOTER_CENTER_SETPOINT = 10100;
+    public static final double SHOOTER_FAR_SETPOINT = 15000;
 
 }

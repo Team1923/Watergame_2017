@@ -25,7 +25,7 @@ public class GearShootAuton extends CommandGroup {
         addSequential(new VisionGearAlignCommand());// Aligns Gear
         addSequential(new WaitCommand(0.2));
 
-        addParallel(new ShooterSpinUpCommand(RobotMap.SHOOTER_CENTER_SETPOINT_PEG));
+        addParallel(new ShooterSpinUpCommand(RobotMap.SHOOTER_CENTER_SETPOINT));
         addSequential(new SlideCommand(true));
         addSequential(new WaitCommand(0.4));
         addSequential(new AutonGearCommand(true));

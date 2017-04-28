@@ -18,11 +18,11 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class ShootGearAuton extends CommandGroup {
+public class ShootGearAutonCenter extends CommandGroup {
 
-    public ShootGearAuton() {
+    public ShootGearAutonCenter() {
         // Shoots Balls
-        addSequential(new ShooterSpinUpCommand(RobotMap.SHOOTER_CENTER_SETPOINT_BASE));
+        addSequential(new ShooterSpinUpCommand(RobotMap.SHOOTER_CENTER_SETPOINT));
         addSequential(new WaitCommand(0.5));
         addSequential(new IndexerOnCommand());
         addSequential(new WaitCommand(4));
