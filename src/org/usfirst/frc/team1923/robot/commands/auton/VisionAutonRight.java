@@ -22,8 +22,8 @@ public class VisionAutonRight extends CommandGroup {
         addSequential(new ShiftCommand(false));
         addSequential(new DriveTimeCommand(0.5, 1.5));
 
-        addSequential(new TurnTimeCommand(-0.3, 0.3));
-        addSequential(new VisionScanCommand(-0.2, 5));
+        addSequential(new TurnTimeCommand(-0.5, 0.25));
+        addSequential(new VisionScanCommand(-0.4, 5));
         addSequential(new VisionGearAlignCommand());// Aligns Gear
         addSequential(new WaitCommand(0.2));
 

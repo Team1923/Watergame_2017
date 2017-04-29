@@ -23,7 +23,7 @@ public class ShootGearAutonCenter extends CommandGroup {
     public ShootGearAutonCenter() {
         // Shoots Balls
         addSequential(new ShooterSpinUpCommand(RobotMap.SHOOTER_CENTER_SETPOINT));
-        addSequential(new WaitCommand(0.5));
+        addSequential(new WaitCommand(0.75));
         addSequential(new IndexerOnCommand());
         addSequential(new WaitCommand(4));
         addParallel(new IndexerOffCommand());
@@ -38,9 +38,9 @@ public class ShootGearAutonCenter extends CommandGroup {
         addSequential(new WaitCommand(0.2));
 
         addSequential(new SlideCommand(true));
-        addSequential(new WaitCommand(0.2));
+        addSequential(new WaitCommand(0.6));
         addSequential(new AutonGearCommand(true));
-        addSequential(new WaitCommand(0.2));
+        addSequential(new WaitCommand(0.6));
         addSequential(new DriveTimeCommand(-0.5, 1));
     }
 }

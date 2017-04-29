@@ -111,7 +111,7 @@ public class VisionSubsystem extends Subsystem {
                 gearCenterx = sumx / pipe.filterContoursOutput().size();
             }
             // Add 4 to make sure we don't hit the center of the gear
-            gearTurn = gearCenterx - RobotMap.IMG_WIDTH / 2 + 4;
+            gearTurn = gearCenterx - RobotMap.IMG_WIDTH / 2 + 9;
             gearTurn /= RobotMap.TURN_CONSTANT;
             // Check Boundaries of turn
             if (gearTurn < -1)
