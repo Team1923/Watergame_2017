@@ -22,7 +22,7 @@ public class LogDataCommand extends Command {
 
     /**
      * This command will have a single shot logging event
-     * 
+     *
      * @param message
      */
     public LogDataCommand(String message) {
@@ -34,8 +34,8 @@ public class LogDataCommand extends Command {
     // Called once when the command executes
     @Override
     protected void initialize() {
-        if (this.message != null) {
-            Robot.debug.logData(this.message);
+        if (message != null) {
+            Robot.debug.logData(message);
         }
     }
 
@@ -55,7 +55,7 @@ public class LogDataCommand extends Command {
 
     @Override
     protected boolean isFinished() {
-        return this.message != null;
+        return message != null;
     }
 
 }

@@ -27,29 +27,30 @@ public class OI {
 
     public OI() {
         // Creates two ps4 controllers
-        this.driver = new PS4Controller(RobotMap.DRIVER_CONTROLLER_PORT);
-        this.driver.lt.setTriggerSensitivity(0.5);
-        this.driver.rt.setTriggerSensitivity(0.5);
+        driver = new PS4Controller(RobotMap.DRIVER_CONTROLLER_PORT);
+        driver.lt.setTriggerSensitivity(0.5);
+        driver.rt.setTriggerSensitivity(0.5);
 
-        this.driver.lb.whenActive(new ShiftCommand(false));
-        this.driver.rb.whenActive(new ShiftCommand(true));
+        driver.lb.whenActive(new ShiftCommand(false));
+        driver.rb.whenActive(new ShiftCommand(true));
 
-        this.driver.lt.whenActive(new ShiftOmniCommand(true));
-        this.driver.rt.whenActive(new ShiftOmniCommand(false));
+        driver.lt.whenActive(new ShiftOmniCommand(true));
+        driver.rt.whenActive(new ShiftOmniCommand(false));
 
-        this.driver.cross.whenActive(new ResetEncoderCommand());
+        driver.cross.whenActive(new ResetEncoderCommand());
 
-        this.op = new XboxController(RobotMap.OP_CONTROLLER_PORT);
+        op = new XboxController(RobotMap.OP_CONTROLLER_PORT);
 
-        this.op.x.whenActive(new SlideCommand());
-        this.op.y.whenActive(new GearCommand());
-        this.op.b.whenActive(new GearSetHomeCommand());
-        this.op.rb.whenActive(new ShooterSpinUpCommand(RobotMap.SHOOTER_CENTER_SETPOINT));
-        this.op.lb.whenActive(new ShooterSpinUpCommand(0));
-        this.op.a.whileHeld(new IndexerOnCommand());
+        op.x.whenActive(new SlideCommand());
+        op.y.whenActive(new GearCommand());
+        op.b.whenActive(new GearSetHomeCommand());
+        op.rb.whenActive(new ShooterSpinUpCommand(RobotMap.SHOOTER_CENTER_SETPOINT));
+        op.lb.whenActive(new ShooterSpinUpCommand(0));
+        op.a.whileHeld(new IndexerOnCommand());
+        op.back.whenActive(new IndexerOffCommand());
 
-        this.op.start.whenActive(new ShooterSpinUpCommand(3500)); // 9750
-        this.op.back.whenActive(new IndexerOffCommand());
+        // For testing in pit
+        op.start.whenActive(new ShooterSpinUpCommand(3500)); // 9750
 
         // Vision Commands
         Command pegAlign = new VisionGearAlignCommand(false);

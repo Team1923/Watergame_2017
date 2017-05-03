@@ -18,12 +18,12 @@ public class PIDController extends edu.wpi.first.wpilibj.PIDController {
         super(Kp, Ki, Kd, Kf, source, output, period);
 
         try {
-            this.totalErrorField = edu.wpi.first.wpilibj.PIDController.class.getDeclaredField("m_totalError");
+            totalErrorField = edu.wpi.first.wpilibj.PIDController.class.getDeclaredField("m_totalError");
         } catch (NoSuchFieldException e) {
             e.printStackTrace(); // Should never happen
         }
-        this.totalErrorField.setAccessible(true);
-        this.IZone = 0;
+        totalErrorField.setAccessible(true);
+        IZone = 0;
     }
 
     public PIDController(double Kp, double Ki, double Kd, double Kf, PIDSource source, PIDOutput output) {
@@ -39,12 +39,12 @@ public class PIDController extends edu.wpi.first.wpilibj.PIDController {
     }
 
     public void setIZone(double iZone) {
-        this.IZone = iZone;
+        IZone = iZone;
     }
 
     @Override
     protected void calculate() {
-        if (this.getError() > this.IZone) {
+        if (this.getError() > IZone) {
             this.clearTotalError();
         }
 
@@ -53,7 +53,7 @@ public class PIDController extends edu.wpi.first.wpilibj.PIDController {
 
     protected void clearTotalError() {
         try {
-            this.totalErrorField.setDouble(this, 0);
+            totalErrorField.setDouble(this, 0);
         } catch (IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }

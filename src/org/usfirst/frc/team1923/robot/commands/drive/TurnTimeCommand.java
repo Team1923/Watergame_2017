@@ -12,7 +12,7 @@ public class TurnTimeCommand extends Command {
 
     /**
      * Turns a set time at a set power. Turns right with positive power
-     * 
+     *
      * @param power
      *            PercentVBus of the motors
      * @param timeOut
@@ -26,7 +26,7 @@ public class TurnTimeCommand extends Command {
 
     @Override
     protected void initialize() {
-        Robot.driveSubSys.drive(this.power, -this.power, TalonControlMode.PercentVbus);
+        Robot.driveSubSys.drive(power, -power, TalonControlMode.PercentVbus);
     }
 
     @Override

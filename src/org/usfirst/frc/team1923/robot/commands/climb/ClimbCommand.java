@@ -18,19 +18,19 @@ public class ClimbCommand extends Command {
 
     @Override
     protected void initialize() {
-        this.speed = 0;
-        this.leftTrigger = 0;
-        this.rightTrigger = 0;
+        speed = 0;
+        leftTrigger = 0;
+        rightTrigger = 0;
     }
 
     @Override
     protected void execute() {
-        this.rightTrigger = Robot.oi.op.rt.getX();
-        this.leftTrigger = Robot.oi.op.lt.getX();
+        rightTrigger = Robot.oi.op.rt.getX();
+        leftTrigger = Robot.oi.op.lt.getX();
 
-        this.speed = this.rightTrigger > 0.07 ? this.rightTrigger : -this.leftTrigger;
+        speed = rightTrigger > 0.07 ? rightTrigger : -leftTrigger;
 
-        Robot.climbSubSys.set(this.speed);
+        Robot.climbSubSys.set(speed);
     }
 
     @Override

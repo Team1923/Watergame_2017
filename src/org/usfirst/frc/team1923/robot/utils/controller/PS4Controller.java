@@ -43,22 +43,22 @@ public class PS4Controller extends Controller {
     public PS4Controller(final int port) {
         super(port);
 
-        this.dPad = new DirectionalPad(this.controller);
-        this.lt = new Trigger(this.controller, LEFT_TRIGGER_AXIS_ID);
-        this.rt = new Trigger(this.controller, RIGHT_TRIGGER_AXIS_ID);
-        this.square = new JoystickButton(this.controller, SQUARE_BUTTON_ID);
-        this.triangle = new JoystickButton(this.controller, TRIANGLE_BUTTON_ID);
-        this.circle = new JoystickButton(this.controller, CIRCLE_BUTTON_ID);
-        this.cross = new JoystickButton(this.controller, CROSS_BUTTON_ID);
-        this.lb = new JoystickButton(this.controller, LB_BUTTON_ID);
-        this.rb = new JoystickButton(this.controller, RB_BUTTON_ID);
-        this.share = new JoystickButton(this.controller, SHARE_BUTTON_ID);
-        this.options = new JoystickButton(this.controller, OPTIONS_BUTTON_ID);
-        this.rightClick = new JoystickButton(this.controller, RIGHT_CLICK_ID);
-        this.leftClick = new JoystickButton(this.controller, LEFT_CLICK_ID);
+        dPad = new DirectionalPad(controller);
+        lt = new Trigger(controller, LEFT_TRIGGER_AXIS_ID);
+        rt = new Trigger(controller, RIGHT_TRIGGER_AXIS_ID);
+        square = new JoystickButton(controller, SQUARE_BUTTON_ID);
+        triangle = new JoystickButton(controller, TRIANGLE_BUTTON_ID);
+        circle = new JoystickButton(controller, CIRCLE_BUTTON_ID);
+        cross = new JoystickButton(controller, CROSS_BUTTON_ID);
+        lb = new JoystickButton(controller, LB_BUTTON_ID);
+        rb = new JoystickButton(controller, RB_BUTTON_ID);
+        share = new JoystickButton(controller, SHARE_BUTTON_ID);
+        options = new JoystickButton(controller, OPTIONS_BUTTON_ID);
+        rightClick = new JoystickButton(controller, RIGHT_CLICK_ID);
+        leftClick = new JoystickButton(controller, LEFT_CLICK_ID);
 
-        this.lt.setTriggerDeadZone(TRIGGER_DEADZONE);
-        this.rt.setTriggerDeadZone(TRIGGER_DEADZONE);
+        lt.setTriggerDeadZone(TRIGGER_DEADZONE);
+        rt.setTriggerDeadZone(TRIGGER_DEADZONE);
     }
 
     /**

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * This commands aligns the Robot with the peg or the feeder (depending on
  * boolean passed by constructor)
- * 
+ *
  * @author Abhinav
  */
 
@@ -27,7 +27,7 @@ public class VisionGearAlignCommand extends Command {
 
     public VisionGearAlignCommand(boolean feeder) {
         this.feeder = feeder;
-        this.stoppingDist = (!feeder ? RobotMap.PEG_DIST : RobotMap.FEEDER_DIST);
+        stoppingDist = !feeder ? RobotMap.PEG_DIST : RobotMap.FEEDER_DIST;
         requires(Robot.visionSubSys);
         requires(Robot.driveSubSys);
     }
@@ -47,9 +47,11 @@ public class VisionGearAlignCommand extends Command {
             turn = 0;
             Robot.visionSubSys.found = false;
         } else {
-            if (Robot.visionSubSys.dist >= 30)
+            if (Robot.visionSubSys.dist >= 30) {
                 power = 0.4;
-            else power = 0.2;
+            } else {
+                power = 0.2;
+            }
 
             Robot.visionSubSys.found = true;
             turn = Robot.visionSubSys.gearTurn;
@@ -59,9 +61,11 @@ public class VisionGearAlignCommand extends Command {
 
         Robot.driveSubSys.auto(power, turn);
 
-        if (Robot.visionSubSys.dist <= RobotMap.PEG_DIST)
+        if (Robot.visionSubSys.dist <= RobotMap.PEG_DIST) {
             aligned = true;
-        else aligned = false;
+        } else {
+            aligned = false;
+        }
 
         SmartDashboard.putBoolean("Found: ", Robot.visionSubSys.found);
         SmartDashboard.putBoolean("Aligned and Ready to Drop: ", aligned);

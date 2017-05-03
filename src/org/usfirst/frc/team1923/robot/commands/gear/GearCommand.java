@@ -15,12 +15,12 @@ public class GearCommand extends InstantCommand {
     public GearCommand() {
         super();
         requires(Robot.gearSubSys);
-        this.toggle = true;
+        toggle = true;
     }
 
     /**
      * This sets the mechanism to a specific position
-     * 
+     *
      * @param open
      *            true if want to eject
      */
@@ -32,9 +32,9 @@ public class GearCommand extends InstantCommand {
 
     @Override
     protected void initialize() {
-        if (this.toggle) {
+        if (toggle) {
             Robot.gearSubSys.gearShift();
-        } else if (this.open) {
+        } else if (open) {
             Robot.gearSubSys.gearOpen();
         } else {
             Robot.gearSubSys.gearClose();

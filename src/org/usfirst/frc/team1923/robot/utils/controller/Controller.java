@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
- * Base controller class that provides a framework for XboxController and PS4Controller.
+ * Base controller class that provides a framework for XboxController and
+ * PS4Controller.
  *
  * @author AJ Granowski
  * @author 4624 Owatonna Robotics
@@ -23,7 +24,7 @@ public class Controller extends Joystick {
         super(port);
 
         this.port = port;
-        this.controller = new Joystick(this.port);
+        controller = new Joystick(this.port);
     }
 
     public enum Hand {
@@ -57,9 +58,8 @@ public class Controller extends Joystick {
             DPad[] all = DPad.values();
 
             for (int i = 0; i < all.length; i++) {
-                if (all[i].value == angle) {
+                if (all[i].value == angle)
                     return all[i];
-                }
             }
 
             System.out.println("[Controller.DPad.getEnum()] Angle supplied (" + angle + ") has no related DPad direction");
@@ -79,17 +79,16 @@ public class Controller extends Joystick {
         private int axisId;
 
         Trigger(final Joystick joystick, final int axisId) {
-            this.parent = joystick;
+            parent = joystick;
             this.axisId = axisId;
-            this.deadZone = DEFAULT_TRIGGER_DEADZONE;
-            this.sensitivity = DEFAULT_TRIGGER_SENSITIVITY;
+            deadZone = DEFAULT_TRIGGER_DEADZONE;
+            sensitivity = DEFAULT_TRIGGER_SENSITIVITY;
         }
 
         @Override
         public boolean get() {
             return getX() > sensitivity;
         }
-
 
         /**
          * 0 = Not pressed 1 = Completely pressed
@@ -107,7 +106,7 @@ public class Controller extends Joystick {
          * @param number
          */
         public void setTriggerDeadZone(double number) {
-            this.deadZone = number;
+            deadZone = number;
         }
 
         /**
@@ -116,7 +115,7 @@ public class Controller extends Joystick {
          * @param number
          */
         public void setTriggerSensitivity(double number) {
-            this.sensitivity = number;
+            sensitivity = number;
         }
     }
 
@@ -138,14 +137,14 @@ public class Controller extends Joystick {
 
         DirectionalPad(final Joystick parent) {
             this.parent = parent;
-            this.up = new DPadButton(this, DPad.UP);
-            this.upRight = new DPadButton(this, DPad.UP_RIGHT);
-            this.right = new DPadButton(this, DPad.RIGHT);
-            this.downRight = new DPadButton(this, DPad.DOWN_RIGHT);
-            this.down = new DPadButton(this, DPad.DOWN);
-            this.downLeft = new DPadButton(this, DPad.DOWN_LEFT);
-            this.left = new DPadButton(this, DPad.LEFT);
-            this.upLeft = new DPadButton(this, DPad.UP_LEFT);
+            up = new DPadButton(this, DPad.UP);
+            upRight = new DPadButton(this, DPad.UP_RIGHT);
+            right = new DPadButton(this, DPad.RIGHT);
+            downRight = new DPadButton(this, DPad.DOWN_RIGHT);
+            down = new DPadButton(this, DPad.DOWN);
+            downLeft = new DPadButton(this, DPad.DOWN_LEFT);
+            left = new DPadButton(this, DPad.LEFT);
+            upLeft = new DPadButton(this, DPad.UP_LEFT);
         }
 
         /**
@@ -153,11 +152,12 @@ public class Controller extends Joystick {
          * button.
          */
         public static class DPadButton extends Button {
+
             private final DPad direction;
             private final DirectionalPad parent;
 
             DPadButton(final DirectionalPad parent, final DPad dPadDirection) {
-                this.direction = dPadDirection;
+                direction = dPadDirection;
                 this.parent = parent;
             }
 
@@ -209,15 +209,18 @@ public class Controller extends Joystick {
         double deadZoneSizeClamp = deadZoneSize;
         double adjusted;
 
-        if (deadZoneSizeClamp < 0 || deadZoneSizeClamp >= 1) {
+        if ((deadZoneSizeClamp < 0) || (deadZoneSizeClamp >= 1)) {
             deadZoneSizeClamp = 0; // Prevent any weird errors
         }
 
         negative = input < 0 ? -1 : 1;
 
-        adjusted = Math.abs(input) - deadZoneSizeClamp; // Subtract the deadzone from the magnitude
-        adjusted = adjusted < 0 ? 0 : adjusted; // if the new input is negative, make it zero
-        adjusted = adjusted / (1 - deadZoneSizeClamp); // Adjust the adjustment so it can max at 1
+        adjusted = Math.abs(input) - deadZoneSizeClamp; // Subtract the deadzone
+                                                        // from the magnitude
+        adjusted = adjusted < 0 ? 0 : adjusted; // if the new input is negative,
+                                                // make it zero
+        adjusted = adjusted / (1 - deadZoneSizeClamp); // Adjust the adjustment
+                                                       // so it can max at 1
 
         return negative * adjusted;
     }

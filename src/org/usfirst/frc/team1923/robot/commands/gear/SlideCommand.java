@@ -15,26 +15,26 @@ public class SlideCommand extends InstantCommand {
     public SlideCommand() {
         super();
         requires(Robot.gearSubSys);
-        this.toggle = true;
+        toggle = true;
     }
 
     /**
      * Sets the position of the superstructure to a known state
-     * 
+     *
      * @param out
      *            true if sliding outwards
      */
     public SlideCommand(boolean out) {
         super();
         requires(Robot.gearSubSys);
-        this.open = out;
+        open = out;
     }
 
     @Override
     protected void initialize() {
-        if (this.toggle) {
+        if (toggle) {
             Robot.gearSubSys.slideShift();
-        } else if (this.open) {
+        } else if (open) {
             Robot.gearSubSys.slideForward();
         } else {
             Robot.gearSubSys.slideReverse();

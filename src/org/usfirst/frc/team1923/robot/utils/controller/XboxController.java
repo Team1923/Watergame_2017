@@ -36,19 +36,19 @@ public class XboxController extends Controller {
     public XboxController(final int port) {
         super(port);
 
-        this.dPad = new DirectionalPad(this.controller);
-        this.lt = new Trigger(this.controller, LEFT_TRIGGER_AXIS_ID);
-        this.rt = new Trigger(this.controller, RIGHT_TRIGGER_AXIS_ID);
-        this.a = new JoystickButton(this.controller, A_BUTTON_ID);
-        this.b = new JoystickButton(this.controller, B_BUTTON_ID);
-        this.x = new JoystickButton(this.controller, X_BUTTON_ID);
-        this.y = new JoystickButton(this.controller, Y_BUTTON_ID);
-        this.lb = new JoystickButton(this.controller, LB_BUTTON_ID);
-        this.rb = new JoystickButton(this.controller, RB_BUTTON_ID);
-        this.back = new JoystickButton(this.controller, BACK_BUTTON_ID);
-        this.start = new JoystickButton(this.controller, START_BUTTON_ID);
-        this.rightClick = new JoystickButton(this.controller, RIGHT_CLICK_ID);
-        this.leftClick = new JoystickButton(this.controller, LEFT_CLICK_ID);
+        dPad = new DirectionalPad(controller);
+        lt = new Trigger(controller, LEFT_TRIGGER_AXIS_ID);
+        rt = new Trigger(controller, RIGHT_TRIGGER_AXIS_ID);
+        a = new JoystickButton(controller, A_BUTTON_ID);
+        b = new JoystickButton(controller, B_BUTTON_ID);
+        x = new JoystickButton(controller, X_BUTTON_ID);
+        y = new JoystickButton(controller, Y_BUTTON_ID);
+        lb = new JoystickButton(controller, LB_BUTTON_ID);
+        rb = new JoystickButton(controller, RB_BUTTON_ID);
+        back = new JoystickButton(controller, BACK_BUTTON_ID);
+        start = new JoystickButton(controller, START_BUTTON_ID);
+        rightClick = new JoystickButton(controller, RIGHT_CLICK_ID);
+        leftClick = new JoystickButton(controller, LEFT_CLICK_ID);
     }
 
 }

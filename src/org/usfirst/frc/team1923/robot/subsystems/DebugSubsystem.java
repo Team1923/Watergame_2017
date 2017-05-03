@@ -30,10 +30,10 @@ public class DebugSubsystem extends Subsystem {
      */
     public DebugSubsystem() {
 
-        filePath = "/home/lvuser/" + System.currentTimeMillis() % 10000 + "match.log";
+        filePath = "/home/lvuser/" + (System.currentTimeMillis() % 10000) + "match.log";
 
         lastLog = 0;
-        this.refresh_time = 100;
+        refresh_time = 100;
     }
 
     /**
@@ -64,10 +64,9 @@ public class DebugSubsystem extends Subsystem {
             }
         }
 
-        if (this.lastLog + refresh_time > System.currentTimeMillis()) {
+        if ((lastLog + refresh_time) > System.currentTimeMillis())
             return;
-        }
-        this.lastLog = System.currentTimeMillis();
+        lastLog = System.currentTimeMillis();
 
         String control_mode = "";
         if (Robot.dstation.isAutonomous()) {

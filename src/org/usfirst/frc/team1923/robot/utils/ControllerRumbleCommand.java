@@ -12,20 +12,23 @@ public class ControllerRumbleCommand extends TimedCommand {
     /**
      * Command to rumble the controller of the operator for a certain amount of
      * time. Default power of 50%
-     * 
-     * @param timeout time to rumble
+     *
+     * @param timeout
+     *            time to rumble
      */
     public ControllerRumbleCommand(double timeout) {
         super(timeout);
-        this.power = 0.5;
+        power = 0.5;
     }
 
     /**
      * Command to rumble the controller of the operator for a certain amount of
      * time.
-     * 
-     * @param timeout time to rumble
-     * @param power 0-1 intensity of rumble
+     *
+     * @param timeout
+     *            time to rumble
+     * @param power
+     *            0-1 intensity of rumble
      */
     public ControllerRumbleCommand(double timeout, double power) {
         super(timeout);

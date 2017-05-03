@@ -45,21 +45,21 @@ public class DrivetrainSubsystem extends Subsystem {
     private PigeonImu imu;
 
     public DrivetrainSubsystem() {
-        this.leftTalons = new CANTalon[RobotMap.LEFT_DRIVE_PORTS.length];
-        this.rightTalons = new CANTalon[RobotMap.RIGHT_DRIVE_PORTS.length];
+        leftTalons = new CANTalon[RobotMap.LEFT_DRIVE_PORTS.length];
+        rightTalons = new CANTalon[RobotMap.RIGHT_DRIVE_PORTS.length];
 
-        this.imu = new PigeonImu(new CANTalon((RobotMap.IMU_PORT)));
+        imu = new PigeonImu(new CANTalon(RobotMap.IMU_PORT));
 
         for (int i = 0; i < RobotMap.LEFT_DRIVE_PORTS.length; i++) {
-            this.leftTalons[i] = new CANTalon(RobotMap.LEFT_DRIVE_PORTS[i]);
+            leftTalons[i] = new CANTalon(RobotMap.LEFT_DRIVE_PORTS[i]);
         }
 
         for (int i = 0; i < RobotMap.RIGHT_DRIVE_PORTS.length; i++) {
-            this.rightTalons[i] = new CANTalon(RobotMap.RIGHT_DRIVE_PORTS[i]);
+            rightTalons[i] = new CANTalon(RobotMap.RIGHT_DRIVE_PORTS[i]);
         }
 
-        this.shifter = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.SHIFT_FORWARD_PORT, RobotMap.SHIFT_BACKWARD_PORT);
-        this.shiftOmnis = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.OMNI_FORWARD_PORT, RobotMap.OMNI_BACKWARD_PORT);
+        shifter = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.SHIFT_FORWARD_PORT, RobotMap.SHIFT_BACKWARD_PORT);
+        shiftOmnis = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.OMNI_FORWARD_PORT, RobotMap.OMNI_BACKWARD_PORT);
 
         setToFollow();
         setReverse();
@@ -67,26 +67,26 @@ public class DrivetrainSubsystem extends Subsystem {
     }
 
     private void setToFollow() {
-        for (int i = 1; i < this.leftTalons.length; i++) {
-            this.leftTalons[i].changeControlMode(TalonControlMode.Follower);
-            this.leftTalons[i].set(this.leftTalons[0].getDeviceID());
+        for (int i = 1; i < leftTalons.length; i++) {
+            leftTalons[i].changeControlMode(TalonControlMode.Follower);
+            leftTalons[i].set(leftTalons[0].getDeviceID());
         }
 
-        for (int i = 1; i < this.rightTalons.length; i++) {
-            this.rightTalons[i].changeControlMode(TalonControlMode.Follower);
-            this.rightTalons[i].set(this.rightTalons[0].getDeviceID());
+        for (int i = 1; i < rightTalons.length; i++) {
+            rightTalons[i].changeControlMode(TalonControlMode.Follower);
+            rightTalons[i].set(rightTalons[0].getDeviceID());
         }
     }
 
     /**
      * Sets the two master talons to a certain mode
-     * 
+     *
      * @param controlMode
      *            TalonControlMode to be used
      */
     private void setMasterToMode(TalonControlMode controlMode) {
-        this.leftTalons[0].changeControlMode(controlMode);
-        this.rightTalons[0].changeControlMode(controlMode);
+        leftTalons[0].changeControlMode(controlMode);
+        rightTalons[0].changeControlMode(controlMode);
     }
 
     /**
@@ -94,31 +94,31 @@ public class DrivetrainSubsystem extends Subsystem {
      * peak output voltages and sets the sensor and output reversal flags
      */
     private void configPID() {
-        this.leftTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-        this.leftTalons[0].reverseSensor(LEFT_REVERSED);
-        this.leftTalons[0].configNominalOutputVoltage(0, 0);
-        this.leftTalons[0].configPeakOutputVoltage(12, -12);
+        leftTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        leftTalons[0].reverseSensor(LEFT_REVERSED);
+        leftTalons[0].configNominalOutputVoltage(0, 0);
+        leftTalons[0].configPeakOutputVoltage(12, -12);
 
-        this.rightTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-        this.rightTalons[0].reverseSensor(RIGHT_REVERSED);
-        this.rightTalons[0].configNominalOutputVoltage(0, 0);
-        this.rightTalons[0].configPeakOutputVoltage(12, -12);
+        rightTalons[0].setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        rightTalons[0].reverseSensor(RIGHT_REVERSED);
+        rightTalons[0].configNominalOutputVoltage(0, 0);
+        rightTalons[0].configPeakOutputVoltage(12, -12);
 
-        this.leftTalons[0].setProfile(0);
-        this.leftTalons[0].setF(F_CONSTANT);
-        this.leftTalons[0].setP(P_CONSTANT);
-        this.leftTalons[0].setI(I_CONSTANT);
-        this.leftTalons[0].setD(D_CONSTANT);
-        this.leftTalons[0].setIZone(10000);
-        this.leftTalons[0].setAllowableClosedLoopErr(ALLOWABLE_ERROR);
+        leftTalons[0].setProfile(0);
+        leftTalons[0].setF(F_CONSTANT);
+        leftTalons[0].setP(P_CONSTANT);
+        leftTalons[0].setI(I_CONSTANT);
+        leftTalons[0].setD(D_CONSTANT);
+        leftTalons[0].setIZone(10000);
+        leftTalons[0].setAllowableClosedLoopErr(ALLOWABLE_ERROR);
 
-        this.rightTalons[0].setProfile(0);
-        this.rightTalons[0].setF(F_CONSTANT);
-        this.rightTalons[0].setP(P_CONSTANT);
-        this.rightTalons[0].setI(I_CONSTANT);
-        this.rightTalons[0].setD(D_CONSTANT);
-        this.rightTalons[0].setIZone(10000);
-        this.rightTalons[0].setAllowableClosedLoopErr(ALLOWABLE_ERROR);
+        rightTalons[0].setProfile(0);
+        rightTalons[0].setF(F_CONSTANT);
+        rightTalons[0].setP(P_CONSTANT);
+        rightTalons[0].setI(I_CONSTANT);
+        rightTalons[0].setD(D_CONSTANT);
+        rightTalons[0].setIZone(10000);
+        rightTalons[0].setAllowableClosedLoopErr(ALLOWABLE_ERROR);
 
         setMasterToMode(TalonControlMode.PercentVbus);
         setReverse();
@@ -126,27 +126,27 @@ public class DrivetrainSubsystem extends Subsystem {
 
     public void setReverse() {
 
-        this.leftTalons[0].set(0.0);
-        this.leftTalons[0].reverseOutput(LEFT_REVERSED);
-        this.leftTalons[0].setInverted(LEFT_REVERSED);
+        leftTalons[0].set(0.0);
+        leftTalons[0].reverseOutput(LEFT_REVERSED);
+        leftTalons[0].setInverted(LEFT_REVERSED);
 
-        this.rightTalons[0].set(0.0);
-        this.rightTalons[0].reverseOutput(RIGHT_REVERSED);
-        this.rightTalons[0].setInverted(RIGHT_REVERSED);
+        rightTalons[0].set(0.0);
+        rightTalons[0].reverseOutput(RIGHT_REVERSED);
+        rightTalons[0].setInverted(RIGHT_REVERSED);
     }
 
     /**
      * Directly sets the input value of the motors. Use with caution because it
      * doesn't automatically check the control mode
-     * 
+     *
      * @param left
      *            Left power
      * @param right
      *            Right power
      */
     private void set(double left, double right) {
-        this.leftTalons[0].set(left);
-        this.rightTalons[0].set(right);
+        leftTalons[0].set(left);
+        rightTalons[0].set(right);
     }
 
     /**
@@ -157,8 +157,8 @@ public class DrivetrainSubsystem extends Subsystem {
     }
 
     public void disableControl() {
-        this.leftTalons[0].disableControl();
-        this.rightTalons[0].disableControl();
+        leftTalons[0].disableControl();
+        rightTalons[0].disableControl();
     }
 
     public void enable() {
@@ -167,7 +167,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
     /**
      * Sets talon powers with a specific mode
-     * 
+     *
      * @param left
      *            Left power
      * @param right
@@ -176,7 +176,7 @@ public class DrivetrainSubsystem extends Subsystem {
      *            TalonControlMode to be used
      */
     public void drive(double left, double right, TalonControlMode controlMode) {
-        if (this.leftTalons[0].getControlMode() != controlMode || this.rightTalons[0].getControlMode() != controlMode) {
+        if ((leftTalons[0].getControlMode() != controlMode) || (rightTalons[0].getControlMode() != controlMode)) {
             setMasterToMode(controlMode);
         }
 
@@ -193,80 +193,81 @@ public class DrivetrainSubsystem extends Subsystem {
      * position of the robot.
      */
     public void resetPosition() {
-        this.leftTalons[0].setPosition(0);
-        this.rightTalons[0].setPosition(0);
+        leftTalons[0].setPosition(0);
+        rightTalons[0].setPosition(0);
     }
 
     private double max(double[] a) {
         double max = a[0];
         for (double b : a) {
-            if (b > max)
+            if (b > max) {
                 max = b;
+            }
         }
         return max;
     }
 
     public double getLeftPosition() {
-        return this.leftTalons[0].getPosition();
+        return leftTalons[0].getPosition();
     }
 
     public double getRightPosition() {
-        return this.rightTalons[0].getPosition();
+        return rightTalons[0].getPosition();
     }
 
     public int getLeftEncPosition() {
-        return -this.leftTalons[0].getEncPosition();
+        return -leftTalons[0].getEncPosition();
     }
 
     public int getRightEncPosition() {
-        return this.rightTalons[0].getEncPosition();
+        return rightTalons[0].getEncPosition();
     }
 
     public double getLeftSpeed() {
-        return this.leftTalons[0].getSpeed();
+        return leftTalons[0].getSpeed();
     }
 
     public double getRightSpeed() {
-        return this.rightTalons[0].getSpeed();
+        return rightTalons[0].getSpeed();
     }
 
     public double getLeftTarget() {
-        return this.leftTalons[0].get();
+        return leftTalons[0].get();
     }
 
     public double getRightTarget() {
-        return this.rightTalons[0].get();
+        return rightTalons[0].get();
     }
 
     public double getLeftError() {
-        return this.leftTalons[0].getError();
+        return leftTalons[0].getError();
     }
 
     public double getRightError() {
-        return this.rightTalons[0].getError();
+        return rightTalons[0].getError();
     }
 
     public void shiftUp() {
-        if (this.shifter.get() != Value.kReverse) {
-            this.shifter.set(Value.kReverse);
+        if (shifter.get() != Value.kReverse) {
+            shifter.set(Value.kReverse);
         }
     }
 
     public void shiftDown() {
         if (safeToShift()) {
-            this.shifter.set(Value.kForward);
+            shifter.set(Value.kForward);
         }
     }
 
     public void shiftUpOmnis() {
-        if (this.shiftOmnis.get() != Value.kForward) {
-            this.shiftOmnis.set(Value.kForward);
+        if (shiftOmnis.get() != Value.kForward) {
+            shiftOmnis.set(Value.kForward);
         }
     }
 
     public void shiftDownOmnis() {
-        if (this.shiftOmnis.get() != Value.kReverse) {
-            this.shiftOmnis.set(Value.kReverse);
+        if (shiftOmnis.get() != Value.kReverse) {
+            shiftOmnis.set(Value.kReverse);
         }
     }
 
@@ -277,23 +278,23 @@ public class DrivetrainSubsystem extends Subsystem {
     }
 
     public PigeonImu getImu() {
-        return this.imu;
+        return imu;
     }
 
     public void setLeft(double power, TalonControlMode controlMode) {
-        if (this.leftTalons[0].getControlMode() != controlMode) {
-            this.leftTalons[0].changeControlMode(controlMode);
+        if (leftTalons[0].getControlMode() != controlMode) {
+            leftTalons[0].changeControlMode(controlMode);
         }
 
-        this.leftTalons[0].set(power);
+        leftTalons[0].set(power);
     }
 
     public void setRight(double power, TalonControlMode controlMode) {
-        if (this.rightTalons[0].getControlMode() != controlMode) {
-            this.rightTalons[0].changeControlMode(controlMode);
+        if (rightTalons[0].getControlMode() != controlMode) {
+            rightTalons[0].changeControlMode(controlMode);
         }
 
-        this.rightTalons[0].set(power);
+        rightTalons[0].set(power);
     }
 
     public void stop() {
@@ -306,19 +307,20 @@ public class DrivetrainSubsystem extends Subsystem {
     }
 
     public static double angleToDistance(double angle) {
-        return TURNING_CONSTANT * angle * Math.PI * DRIVE_BASE_WIDTH / 360;
+        return (TURNING_CONSTANT * angle * Math.PI * DRIVE_BASE_WIDTH) / 360;
     }
 
     public static double distanceToRotation(double distance) {
-        return distance / (Math.PI * WHEEL_DIAMETER * DRIVE_RATIO) * DRIVE_CONSTANT;
+        return (distance / (Math.PI * WHEEL_DIAMETER * DRIVE_RATIO)) * DRIVE_CONSTANT;
     }
 
     public void configMM() {
         leftTalons[0].setMotionMagicAcceleration(500);
         rightTalons[0].setMotionMagicAcceleration(500);
 
-        leftTalons[0].setMotionMagicCruiseVelocity(800); // TODO: Is this in
-                                                         // rpm?
+        leftTalons[0].setMotionMagicCruiseVelocity(800); // TODO: Is this
+                                                         // in
+        // rpm?
         rightTalons[0].setMotionMagicCruiseVelocity(800);
     }
 

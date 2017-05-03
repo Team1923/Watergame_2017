@@ -111,24 +111,25 @@ public class VisionSubsystem extends Subsystem {
                 gearCenterx = sumx / pipe.filterContoursOutput().size();
             }
             // Add 4 to make sure we don't hit the center of the gear
-            gearTurn = gearCenterx - RobotMap.IMG_WIDTH / 2 + 9;
+            gearTurn = (gearCenterx - (RobotMap.IMG_WIDTH / 2)) + 9;
             gearTurn /= RobotMap.TURN_CONSTANT;
             // Check Boundaries of turn
-            if (gearTurn < -1)
+            if (gearTurn < -1) {
                 gearTurn = -1;
-            else if (gearTurn > 1)
+            } else if (gearTurn > 1) {
                 gearTurn = 1;
+            }
 
             // Make sure if no contours are seen the robot will not move
-            if (pipe.filterContoursOutput().isEmpty())
+            if (pipe.filterContoursOutput().isEmpty()) {
                 gearTurn = Integer.MIN_VALUE;
+            }
 
             // Logging
             SmartDashboard.putNumber("Center X Gear: ", gearCenterx);
             SmartDashboard.putNumber("Distance to target(Ultrasonic): ", dist);
             SmartDashboard.putNumber("Gear Width: ", gearWidth);
             SmartDashboard.putNumber("Gear Turn: ", gearTurn);
-
         } catch (Exception e) {
             System.out.println("Exception was thrown: " + e);
         }

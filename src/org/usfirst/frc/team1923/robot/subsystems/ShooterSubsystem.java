@@ -26,24 +26,24 @@ public class ShooterSubsystem extends Subsystem {
     public final double allowableError = 150;
 
     public ShooterSubsystem() {
-        this.shooter = new CANTalon(RobotMap.SHOOTER_PORT);
-        this.indexer = new CANTalon(RobotMap.INDEXER_PORT);
+        shooter = new CANTalon(RobotMap.SHOOTER_PORT);
+        indexer = new CANTalon(RobotMap.INDEXER_PORT);
 
-        this.shooter.configPeakOutputVoltage(12, 0);
-        this.shooter.configNominalOutputVoltage(0, 0);
+        shooter.configPeakOutputVoltage(12, 0);
+        shooter.configNominalOutputVoltage(0, 0);
 
-        this.shooter.setP(P_CONSTANT);
-        this.shooter.setI(I_CONSTANT);
-        this.shooter.setD(D_CONSTANT);
-        this.shooter.setF(F_CONSTANT);
+        shooter.setP(P_CONSTANT);
+        shooter.setI(I_CONSTANT);
+        shooter.setD(D_CONSTANT);
+        shooter.setF(F_CONSTANT);
 
-        this.shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-        this.shooter.setCurrentLimit(40);
+        shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        shooter.setCurrentLimit(40);
         // this.shooter.setV
-        this.shooter.configEncoderCodesPerRev(4096);
-        this.shooter.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
-        this.shooter.reverseSensor(true);
-        this.shooter.reverseOutput(false);
+        shooter.configEncoderCodesPerRev(4096);
+        shooter.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+        shooter.reverseSensor(true);
+        shooter.reverseOutput(false);
         shooter.changeControlMode(TalonControlMode.Speed);
 
     }

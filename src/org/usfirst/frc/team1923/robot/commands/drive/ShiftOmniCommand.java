@@ -10,7 +10,7 @@ public class ShiftOmniCommand extends InstantCommand {
 
     /**
      * Shifts the back omni wheels up or down
-     * 
+     *
      * @param up
      *            true if omnis lifts off floor
      */
@@ -21,7 +21,7 @@ public class ShiftOmniCommand extends InstantCommand {
 
     @Override
     protected void initialize() {
-        if (this.up) {
+        if (up) {
             Robot.driveSubSys.shiftUpOmnis();
         } else {
             Robot.driveSubSys.shiftDownOmnis();

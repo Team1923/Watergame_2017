@@ -12,7 +12,7 @@ public class DriveTimeCommand extends Command {
 
     /**
      * Drives a set time at a set speed
-     * 
+     *
      * @param power
      *            PercentVBus value for both motors
      * @param timeOut
@@ -43,7 +43,7 @@ public class DriveTimeCommand extends Command {
 
     @Override
     protected void execute() {
-        Robot.driveSubSys.drive(this.power, this.power, TalonControlMode.PercentVbus);
+        Robot.driveSubSys.drive(power, power, TalonControlMode.PercentVbus);
     }
 
     @Override

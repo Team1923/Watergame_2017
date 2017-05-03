@@ -32,7 +32,7 @@ public class GyroTurnCommand extends Command {
 
     /**
      * This command turns the robot to a specific degree with gyro PID
-     * 
+     *
      * @param degrees
      *            Degrees to turn to the right
      */
@@ -42,45 +42,45 @@ public class GyroTurnCommand extends Command {
         // Ensure that the degrees is [-360, 360] for the PID controller
         this.degrees = degrees % 360;
 
-        this.target = new ImuTarget();
-        this.output = new Drivetrain();
-        this.controller = new PIDController(P_CONST, I_CONST, D_CONST, this.target, this.output);
-        this.controller.setContinuous(true);
-        this.controller.setAbsoluteTolerance(TOLERANCE);
-        this.controller.setOutputRange(-1, 1);
-        this.controller.setInputRange(-360, 360);
-        this.controller.setSetpoint(this.degrees);
-        this.controller.setIZone(I_ZONE);
+        target = new ImuTarget();
+        output = new Drivetrain();
+        controller = new PIDController(P_CONST, I_CONST, D_CONST, target, output);
+        controller.setContinuous(true);
+        controller.setAbsoluteTolerance(TOLERANCE);
+        controller.setOutputRange(-1, 1);
+        controller.setInputRange(-360, 360);
+        controller.setSetpoint(this.degrees);
+        controller.setIZone(I_ZONE);
 
-        this.setTimeout(Math.abs(this.degrees) * 0.005 + 1);
+        this.setTimeout((Math.abs(this.degrees) * 0.005) + 1);
     }
 
     @Override
     protected void initialize() {
-        this.controller.enable();
+        controller.enable();
     }
 
     @Override
     protected void execute() {
         // Debug
         if (RobotMap.DEBUG) {
-            double currentAngle = this.target.pidGet();
-            System.out.println("target = " + this.degrees + ", current = " + currentAngle + ", error = " + (this.degrees - currentAngle));
+            double currentAngle = target.pidGet();
+            System.out.println("target = " + degrees + ", current = " + currentAngle + ", error = " + (degrees - currentAngle));
         }
     }
 
     @Override
     protected boolean isFinished() {
-        return this.controller.onTarget() || this.isTimedOut();
+        return controller.onTarget() || this.isTimedOut();
     }
 
     @Override
     protected void end() {
-        this.controller.disable();
+        controller.disable();
 
-        this.controller = null;
-        this.target = null;
-        this.output = null;
+        controller = null;
+        target = null;
+        output = null;
     }
 
     @Override
@@ -96,10 +96,10 @@ public class GyroTurnCommand extends Command {
         private double startingAngle;
 
         public ImuTarget() {
-            this.imu = Robot.driveSubSys.getImu();
-            this.fusionStatus = new FusionStatus();
+            imu = Robot.driveSubSys.getImu();
+            fusionStatus = new FusionStatus();
 
-            this.startingAngle = this.getHeading();
+            startingAngle = this.getHeading();
         }
 
         @Override
@@ -114,11 +114,11 @@ public class GyroTurnCommand extends Command {
 
         @Override
         public double pidGet() {
-            return this.startingAngle - this.getHeading();
+            return startingAngle - this.getHeading();
         }
 
         protected double getHeading() {
-            return this.imu.GetFusedHeading(this.fusionStatus);
+            return imu.GetFusedHeading(fusionStatus);
         }
 
     }

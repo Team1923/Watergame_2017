@@ -26,7 +26,7 @@ public class DriveMotionMagicCommand extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        this.dist = SmartDashboard.getNumber("Dist to run", 0);
+        dist = SmartDashboard.getNumber("Dist to run", 0);
         Robot.driveSubSys.configMM();
         Robot.driveSubSys.resetPosition();
 
@@ -36,8 +36,8 @@ public class DriveMotionMagicCommand extends Command {
             e.printStackTrace();
         }
 
-        target = DrivetrainSubsystem.distanceToRotation(this.dist);
-        this.targetEncoderTick = (int) (target * 4000);
+        target = DrivetrainSubsystem.distanceToRotation(dist);
+        targetEncoderTick = (int) (target * 4000);
         System.out.println(target);
         Robot.driveSubSys.drive(target, target, TalonControlMode.MotionMagic);
     }
@@ -46,8 +46,7 @@ public class DriveMotionMagicCommand extends Command {
     @Override
     protected void execute() {
         System.out.println("Left Error: " + Robot.driveSubSys.getLeftError() + ", Right Error: " + Robot.driveSubSys.getRightError() + ", Tick: "
-                + this.targetEncoderTick + ", Left: " + Robot.driveSubSys.getLeftEncPosition() + ", Right: "
-                + Robot.driveSubSys.getRightEncPosition());
+                + targetEncoderTick + ", Left: " + Robot.driveSubSys.getLeftEncPosition() + ", Right: " + Robot.driveSubSys.getRightEncPosition());
 
         Robot.driveSubSys.drive(target, target, TalonControlMode.MotionMagic);
     }
@@ -55,8 +54,8 @@ public class DriveMotionMagicCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return (Math.abs(Robot.driveSubSys.getLeftEncPosition() - this.targetEncoderTick) < 300
-                && Math.abs(Robot.driveSubSys.getRightEncPosition() - this.targetEncoderTick) < 300);
+        return (Math.abs(Robot.driveSubSys.getLeftEncPosition() - targetEncoderTick) < 300)
+                && (Math.abs(Robot.driveSubSys.getRightEncPosition() - targetEncoderTick) < 300);
     }
 
     // Called once after isFinished returns true

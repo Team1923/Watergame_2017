@@ -17,7 +17,7 @@ public class DriveDistanceCommand extends Command {
 
     /**
      * Drives distance with external PID with a set timeout
-     * 
+     *
      * @param left
      *            Left target in inches
      * @param right
@@ -35,19 +35,19 @@ public class DriveDistanceCommand extends Command {
 
     /**
      * Drives distance with a calculated timeout
-     * 
+     *
      * @param left
      *            Left target in inches
      * @param right
      *            Right target in inches
      */
     public DriveDistanceCommand(double left, double right) {
-        this(left, right, Math.max(Math.abs(left), Math.abs(right)) * 0.05 + 2);
+        this(left, right, (Math.max(Math.abs(left), Math.abs(right)) * 0.05) + 2);
     }
 
     /**
      * Drives straight with automatic timeout calculation
-     * 
+     *
      * @param distance
      *            Distance in inches
      */
@@ -61,21 +61,21 @@ public class DriveDistanceCommand extends Command {
             System.out.println("Initialized DriveDistanceCommand.");
         }
 
-        this.oldleft = Robot.driveSubSys.getLeftPosition();
-        this.oldright = Robot.driveSubSys.getRightPosition();
+        oldleft = Robot.driveSubSys.getLeftPosition();
+        oldright = Robot.driveSubSys.getRightPosition();
 
-        this.leftTarget = DrivetrainSubsystem.distanceToRotation(left) + Robot.driveSubSys.getLeftPosition();
-        this.rightTarget = DrivetrainSubsystem.distanceToRotation(right) + Robot.driveSubSys.getRightPosition();
+        leftTarget = DrivetrainSubsystem.distanceToRotation(left) + Robot.driveSubSys.getLeftPosition();
+        rightTarget = DrivetrainSubsystem.distanceToRotation(right) + Robot.driveSubSys.getRightPosition();
 
         if (RobotMap.DEBUG) {
-            SmartDashboard.putNumber("Left Target", this.leftTarget);
-            SmartDashboard.putNumber("Right target", this.rightTarget);
+            SmartDashboard.putNumber("Left Target", leftTarget);
+            SmartDashboard.putNumber("Right target", rightTarget);
         }
     }
 
     @Override
     protected void execute() {
-        Robot.driveSubSys.drive(this.leftTarget, this.rightTarget, TalonControlMode.Position);
+        Robot.driveSubSys.drive(leftTarget, rightTarget, TalonControlMode.Position);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class DriveDistanceCommand extends Command {
         }
         return isTimedOut() || ((Math.abs(Robot.driveSubSys.getLeftError()) < Robot.driveSubSys.ALLOWABLE_ERROR)
                 && (Math.abs(Robot.driveSubSys.getRightError()) < Robot.driveSubSys.ALLOWABLE_ERROR)
-                && Robot.driveSubSys.getLeftPosition() != this.oldleft && Robot.driveSubSys.getRightPosition() != this.oldright);
+                && (Robot.driveSubSys.getLeftPosition() != oldleft) && (Robot.driveSubSys.getRightPosition() != oldright));
     }
 
     @Override

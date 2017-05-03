@@ -15,8 +15,8 @@ public class GearSubsystem extends Subsystem {
     public boolean slideShifted;
 
     public GearSubsystem() {
-        this.slider = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.SLIDE_FORWARD_PORT, RobotMap.SLIDE_BACKWARD_PORT);
-        this.gear = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.MECH_FORWARD_PORT, RobotMap.MECH_BACKWARD_PORT);
+        slider = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.SLIDE_FORWARD_PORT, RobotMap.SLIDE_BACKWARD_PORT);
+        gear = new DoubleSolenoid(RobotMap.PCM_MODULE_NUM, RobotMap.MECH_FORWARD_PORT, RobotMap.MECH_BACKWARD_PORT);
         goHome();
     }
 
@@ -26,7 +26,7 @@ public class GearSubsystem extends Subsystem {
     }
 
     public void slideShift() {
-        if (this.slideShifted) {
+        if (slideShifted) {
             slideReverse();
         } else {
             slideForward();
@@ -34,23 +34,23 @@ public class GearSubsystem extends Subsystem {
     }
 
     public void slideReverse() {
-        if (this.slider.get() != Value.kForward) {
-            this.slider.set(Value.kForward);
+        if (slider.get() != Value.kForward) {
+            slider.set(Value.kForward);
         }
 
-        this.slideShifted = false;
+        slideShifted = false;
     }
 
     public void slideForward() {
-        if (this.slider.get() != Value.kReverse) {
-            this.slider.set(Value.kReverse);
+        if (slider.get() != Value.kReverse) {
+            slider.set(Value.kReverse);
         }
 
-        this.slideShifted = true;
+        slideShifted = true;
     }
 
     public void gearShift() {
-        if (this.gearShifted) {
+        if (gearShifted) {
             gearClose();
         } else {
             gearOpen();
@@ -58,19 +58,19 @@ public class GearSubsystem extends Subsystem {
     }
 
     public void gearClose() {
-        if (this.gear.get() != Value.kForward) {
-            this.gear.set(Value.kForward);
+        if (gear.get() != Value.kForward) {
+            gear.set(Value.kForward);
         }
 
-        this.gearShifted = false;
+        gearShifted = false;
     }
 
     public void gearOpen() {
-        if (this.gear.get() != Value.kReverse) {
-            this.gear.set(Value.kReverse);
+        if (gear.get() != Value.kReverse) {
+            gear.set(Value.kReverse);
         }
 
-        this.gearShifted = true;
+        gearShifted = true;
     }
 
     public void goHome() {

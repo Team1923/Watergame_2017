@@ -58,19 +58,19 @@ public class Robot extends IterativeRobot {
 
         oi = new OI();
 
-        this.autonChooser.addDefault("Do Nothing Auto", new DoNothingAuton());
+        autonChooser.addDefault("Do Nothing Auto", new DoNothingAuton());
         // this.autonChooser.addObject("Log", new LogDataCommand("LOGGED"));
-        this.autonChooser.addObject("Drive 2 seconds", new DriveTimeCommand(1.0, 2, true));
-        this.autonChooser.addObject("Vision Auton Right", new VisionAutonRight());
-        this.autonChooser.addObject("Vision Auton Center", new VisionAutonCenter());
-        this.autonChooser.addObject("Vision Auton Left", new VisionAutonLeft());
-        this.autonChooser.addObject("Drive 100 inches", new DriveDistanceCommand(100));
-        this.autonChooser.addObject("Center Shooting Auton", new ShootGearAutonCenter());
+        autonChooser.addObject("Drive 2 seconds", new DriveTimeCommand(1.0, 2, true));
+        autonChooser.addObject("Vision Auton Right", new VisionAutonRight());
+        autonChooser.addObject("Vision Auton Center", new VisionAutonCenter());
+        autonChooser.addObject("Vision Auton Left", new VisionAutonLeft());
+        autonChooser.addObject("Drive 100 inches", new DriveDistanceCommand(100));
+        autonChooser.addObject("Center Shooting Auton", new ShootGearAutonCenter());
 
         // SmartDashboard.putData("Motion Magic SRX", new
         // DriveMotionMagicCommand(100));
 
-        SmartDashboard.putData("Auto Mode", this.autonChooser);
+        SmartDashboard.putData("Auto Mode", autonChooser);
     }
 
     /**
@@ -96,10 +96,10 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         visionSubSys.refreshGear();
-        this.autonomousCommand = this.autonChooser.getSelected();
+        autonomousCommand = autonChooser.getSelected();
 
-        if (this.autonomousCommand != null) {
-            this.autonomousCommand.start();
+        if (autonomousCommand != null) {
+            autonomousCommand.start();
         }
     }
 
@@ -116,8 +116,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit() {
-        if (this.autonomousCommand != null) {
-            this.autonomousCommand.cancel();
+        if (autonomousCommand != null) {
+            autonomousCommand.cancel();
         }
     }
 
@@ -126,10 +126,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopPeriodic() {
-        if (RobotMap.DEBUG) {
-            SmartDashboard.putNumber("Ultrasonic", Robot.visionSubSys.getDistance());
-        }
-        shooterSubSys.refresh();
+        log();
         Scheduler.getInstance().run();
     }
 
@@ -139,6 +136,13 @@ public class Robot extends IterativeRobot {
     @Override
     public void testPeriodic() {
         LiveWindow.run();
+    }
+
+    public void log() {
+        if (RobotMap.DEBUG) {
+            SmartDashboard.putNumber("Ultrasonic", Robot.visionSubSys.getDistance());
+        }
+        shooterSubSys.refresh();
     }
 
 }
